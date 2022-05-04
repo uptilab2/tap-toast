@@ -1,0 +1,150 @@
+{
+	"info": {
+		"_postman_id": "f0dc363a-d125-4662-8229-f6af38a1b320",
+		"name": "Authentication Token",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Authentication token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"access_token\", jsonData.token.accessToken);"
+						],
+						"type": "text/javascript"
+					},
+					"variable": [
+					{"access_token": "token.accessToken"}
+					]
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"clientId\": \"{{client_id}}\",\n  \"clientSecret\": \"{{client_secret}}\",\n  \"userAccessType\": \"TOAST_MACHINE_CLIENT\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{hostname}}/authentication/v1/authentication/login",
+					"host": [
+						"{{hostname}}"
+					],
+					"path": [
+						"authentication",
+						"v1",
+						"authentication",
+						"login"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Authentication token",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"clientId\": \"{{clientId}}\",\n  \"clientSecret\": \"{{clientSecret}}\",\n  \"userAccessType\": \"TOAST_MACHINE_CLIENT\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{hostname}}/authentication/v1/authentication/login",
+							"host": [
+								"{{hostname}}"
+							],
+							"path": [
+								"authentication",
+								"v1",
+								"authentication",
+								"login"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Thu, 20 Jan 2022 17:31:42 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Strict-Transport-Security",
+							"value": "max-age=31536000; includeSubDomains"
+						},
+						{
+							"key": "CF-Cache-Status",
+							"value": "DYNAMIC"
+						},
+						{
+							"key": "Expect-CT",
+							"value": "max-age=604800, report-uri=\"https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct\""
+						},
+						{
+							"key": "Server",
+							"value": "cloudflare"
+						},
+						{
+							"key": "CF-RAY",
+							"value": "6d0a09b2bc913b7c-BOS"
+						},
+						{
+							"key": "Content-Encoding",
+							"value": "gzip"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"@class\": \".SuccessfulResponse\",\n    \"token\": {\n        \"tokenType\": \"Bearer\",\n        \"scope\": null,\n        \"expiresIn\": 86400,\n        \"accessToken\": \"eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Ik5rUXdOemMwTUVZd1JVSTJPREJGTXpJelJUWTRSRUpCTkRZeE5Ua3pRVEpHTjBZNU1qVXhNZyJ9.eyJodHRwczovL3RvYXN0dGFiLmNvbS9jbGllbnRfbmFtZSI6IlNCT1gtVE9BU1RZIiwiaHR0cHM6Ly90b2FzdHRhYi5jb20vYWNjZXNzX3R5cGUiOiJUT0FTVF9NQUNISU5FX0NMSUVOVCIsImh0dHBzOi8vdG9hc3R0YWIuY29tL2V4dGVybmFsX2lkIjoiU0JPWC1UT0FTVFkiLCJodHRwczovL3RvYXN0dGFiLmNvbS9wYXJ0bmVyX2d1aWQiOiJkYTgwN2IwYy1mMTM0LTQzZWEtOGQzZC0xN2ZhMjRhNDc1NWQiLCJodHRwczovL3RvYXN0dGFiLmNvbS90eXBlIjoiUEFSVE5FUiIsImlzcyI6Imh0dHBzOi8vc2FuZGJveC10b2FzdC1wb3MudG9hc3R0YWIuYXV0aDAuY29tLyIsInN1YiI6InNhbmRib3gtdG9hc3R5QGNsaWVudHMiLCJhdWQiOiJodHRwczovL3RvYXN0LXNlcnZpY2VzLWFwaS8iLCJpYXQiOjE2NDI2OTk5MDIsImV4cCI6MTY0Mjc4NjMwMiwiYXpwIjoic2FuZGJveC10b2FzdHkiLCJzY29wZSI6Imd1ZXN0LnBpOnJlYWQgY3JtIG9yZGVyczpyZWFkIG9yZGVycy5vcmRlcnM6d3JpdGUgbWVudXM6cmVhZCBjb25maWc6cmVhZCByZXN0YXVyYW50czpyZWFkIGxhYm9\",\n        \"idToken\": null,\n        \"refreshToken\": null\n    },\n    \"status\": \"SUCCESS\"\n}"
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"var jsonData = JSON.parse(responseBody);",
+					"postman.setEnvironmentVariable(\"accessToken\", jsonData.token.accessToken);"
+				]
+			}
+		}
+	]
+}

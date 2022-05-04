@@ -1,0 +1,2 @@
+{"name": "orders", "replication_method": "INCREMENTAL", "replication_key": "modifiedDate", "key_properties": ["guid"],
+"postman_item": "Orders bulk"}
