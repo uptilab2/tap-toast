@@ -29,16 +29,18 @@ def daterange(start_date, end_date):
 
 
 class Toast(object):
+    authentication = None
 
     def __init__(self):
-         self.authentication = Postman('authentication', Context.config['postman'])
+        if 'authentication_postman' in Context.config:
+            self.authentication = Postman('authentication', Context.config['authentication_postman'])
 
     def _url(self, path):
         return f'{Context.config["hostname"]}/{path.lstrip("/")}'
 
     @backoff.on_exception(backoff.expo, requests.exceptions.RequestException)
     def request(self, postman):
-        if not postman.isAnonymous and not self.is_authorized():
+        if not postman.isAnonymous and not postman.is_authorized:
             self.get_authorization_token()
 
         payload = postman.payload
@@ -57,9 +59,6 @@ class Toast(object):
         except ValueError:
             res = []
         return res
-
-    def is_authorized(self):
-        return 'access_token' in Context.config
 
     def get_authorization_token(self):
         payload = self.authentication.payload

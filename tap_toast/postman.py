@@ -3,6 +3,7 @@ import re
 from tap_toast.context import Context
 from jsonpath_ng import parse
 from tap_toast.utils import get_abs_path
+from base64 import b64encode
 
 
 def setVars(string):
@@ -21,11 +22,12 @@ def getHeaderFromBody (body):
 class Postman:
     events = []
     request = None
+    authentication = None
 
     def __init__(self, name, key):
-        file = json.load(open(get_abs_path(f'postman/{name}.json')))
+        file = json.load(open(get_abs_path(f'postman/{name}.json', Context.config['base_path'])))
         self.readItemConfig(file, key)
-        self.isAnonymous = 'auth' not in file
+        self.authentication = None if 'auth' not in file else file['auth']['type']
 
     def readItemConfig(self, file, name):
         for item in file['item']:
@@ -35,6 +37,27 @@ class Postman:
                     for event in item['event']:
                         if 'variable' in event:
                             self.events.append(event)
+
+    @property
+    def isAnonymous(self):
+        return self.authentication is None
+
+    @property
+    def is_authorized(self):
+        if self.isAnonymous:
+            return True
+        elif self.authentication == 'bearer':
+            return 'bearer' in Context.config
+        elif self.authentication == 'basic':
+            return 'username' in Context.config and 'password' in Context.config
+
+    def _authHeader(self):
+        if self.authentication == 'bearer':
+            return f'Bearer {Context.config["bearer"]}'
+        elif self.authentication == 'basic':
+            pwd = f'{Context.config["username"]}:{Context.config["password"]}'
+            b64pwd = b64encode(str.encode(pwd))
+            return f'Basic {b64pwd.decode()}'
 
     @property
     def url(self):
@@ -54,7 +77,7 @@ class Postman:
     def headers(self):
         headers = {}
         if not self.isAnonymous:
-            headers.update({'Authorization': f'Bearer {Context.config["access_token"]}'})
+            headers.update({'Authorization': self._authHeader()})
 
         if 'header' in self.request:
             for header in self.request['header']:

@@ -51,12 +51,9 @@ class DependencyException(Exception):
 #             STREAMS[stream.tap_stream_id].stream = stream
 #
 
-def ensure_credentials_are_authorized(client):
-    client.is_authorized()
 
 
 def do_sync(client, catalog, state):
-    ensure_credentials_are_authorized(client)
     selected_stream_names = get_selected_streams(catalog)
 
     for stream in catalog.streams:
@@ -84,7 +81,7 @@ def do_sync(client, catalog, state):
 
 # @singer.utils.handle_top_exception(LOGGER)
 def main():
-    parsed_args = singer.utils.parse_args(REQUIRED_CONFIG_KEYS)
+    parsed_args = singer.utils.parse_args([])
 
     Context.config = parsed_args.config
     client = Toast()

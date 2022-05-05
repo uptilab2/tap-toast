@@ -1,5 +1,4 @@
 {
-    "name": "menus",
     "replication_method": "FULL_TABLE",
     "key_properties": ["guid"],
 	"postman_item": "Menus"

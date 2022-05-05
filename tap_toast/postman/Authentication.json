@@ -18,7 +18,7 @@
 						"type": "text/javascript"
 					},
 					"variable": [
-					{"access_token": "token.accessToken"}
+						{"bearer": "token.accessToken"}
 					]
 				}
 			],
