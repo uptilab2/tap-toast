@@ -20,5 +20,12 @@ setup(name='tap-toast',
           tap-toast=tap_toast:main
       ''',
       packages=['tap_toast'],
-      include_package_data=True,
+      package_data={
+          'tap_github': [
+              'tap_github/schemas/*.json',
+              'tap_github/metadatas/*.json',
+              'tap_github/postman/*.json'
+          ]
+      },
+      include_package_data=True
 )

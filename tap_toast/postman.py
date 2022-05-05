@@ -25,7 +25,7 @@ class Postman:
     authentication = None
 
     def __init__(self, name, key):
-        file = json.load(open(get_abs_path(f'postman/{name}.json', Context.config['base_path'])))
+        file = json.load(open(get_abs_path(f'postman/{name}.json', Context.config.get('base_path'))))
         self.readItemConfig(file, key)
         self.authentication = None if 'auth' not in file else file['auth']['type']
 

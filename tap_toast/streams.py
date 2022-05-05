@@ -57,7 +57,7 @@ class Stream:
 
     def load_schema(self):
         schema_file = f"schemas/{self.name}.json"
-        with open(get_abs_path(schema_file, Context.config['base_path'])) as f:
+        with open(get_abs_path(schema_file, Context.config.get('base_path'))) as f:
             schema = json.load(f)
         return schema
 
@@ -65,7 +65,7 @@ class Stream:
         # schema = self.load_schema()
 
         meta_file = f"metadatas/{self.name}.json"
-        with open(get_abs_path(meta_file, Context.config['base_path'])) as f:
+        with open(get_abs_path(meta_file, Context.config.get('base_path'))) as f:
             meta = json.load(f)
 
         mdata = metadata.new()

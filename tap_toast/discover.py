@@ -9,7 +9,7 @@ from tap_toast.context import Context
 def discover_streams(client):
     streams = []
 
-    for f in os.listdir(get_abs_path(f'metadatas/', Context.config['base_path'])):
+    for f in os.listdir(get_abs_path(f'metadatas/', Context.config.get('base_path'))):
         m = re.match(r'([a-zA-Z_]+)\.json', f)
         if m is not None:
             s = Stream(m.group(1), client)
