@@ -12,7 +12,7 @@ setup(name='tap-toast',
       install_requires=[
           'singer-python==5.9.0',
           'requests==2.21.0',
-          'backoff==1.3.2',
+          'backoff==1.8.0',
           'jsonpath_ng==1.5.3'
       ],
       entry_points='''
