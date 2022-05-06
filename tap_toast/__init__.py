@@ -69,14 +69,14 @@ def do_sync(client, catalog, state):
         singer.write_schema(stream_name, stream.schema.to_dict(), key_properties)
 
         LOGGER.info("%s: Starting sync", stream_name)
-        instance = Stream(stream_name, client, stream.stream_alias)
+        instance = Stream(stream_name, client)
         instance.stream = stream
         counter_value = sync_stream(state, instance)
-        singer.write_state(state)
         LOGGER.info("%s: Completed sync (%s rows)", stream_name, counter_value)
+        singer.write_state(state)
 
-    singer.write_state(state)
     LOGGER.info("Finished sync")
+    singer.write_state(state)
 
 
 # @singer.utils.handle_top_exception(LOGGER)
@@ -91,6 +91,7 @@ def main():
     elif parsed_args.catalog:
         state = parsed_args.state or {}
         do_sync(client, parsed_args.catalog, state)
+    LOGGER.info("Finished tap")
 
 
 if __name__ == "__main__":

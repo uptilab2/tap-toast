@@ -1,4 +1,5 @@
 import json
+import os.path
 import re
 from tap_toast.context import Context
 from jsonpath_ng import parse
@@ -27,17 +28,21 @@ class Postman:
     authentication = None
     name = None
 
-    def __init__(self, name, key):
+    def __init__(self, name: str):
         self.name = name
-        filename = get_abs_path(f'postman/{name}.json', Context.config.get('base_path'))
+        filename = get_abs_path(f'postman/{self.name}.json', Context.config.get('base_path'))
+        if not os.path.exists(filename):
+            raise f'Postman file not found at {filename}'
         logger.info(f'Read Postman from {filename}')
         file = json.load(open(filename))
-        self.readItemConfig(file, key)
+        self.readItemConfig(file)
+        if self.request is None:
+            raise f'Item {name} not found in postman file {filename}'
         self.authentication = None if 'auth' not in file else file['auth']['type']
 
-    def readItemConfig(self, file, name):
+    def readItemConfig(self, file):
         for item in file['item']:
-            if item['name'] == name:
+            if item['name'] == self.name:
                 self.request = item['request']
                 if 'event' in item:
                     for event in item['event']:

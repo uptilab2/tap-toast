@@ -21,13 +21,6 @@
         "string"
       ]
     },
-    "images": {
-      "type": [
-        "null",
-        "array"
-      ],
-      "items": {}
-    },
     "visibility": {
       "type": [
         "null",

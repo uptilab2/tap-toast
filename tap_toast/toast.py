@@ -33,7 +33,7 @@ class Toast(object):
 
     def __init__(self):
         if 'authentication_postman' in Context.config:
-            self.authentication = Postman('authentication', Context.config['authentication_postman'])
+            self.authentication = Postman(Context.config['authentication_postman'])
 
     def _url(self, path):
         return f'{Context.config["hostname"]}/{path.lstrip("/")}'
@@ -46,20 +46,28 @@ class Toast(object):
         payload = postman.payload
         headers = postman.headers
         url = postman.url
-        logger.info(f'{postman.method} request {url}')
-        if postman.method == "GET":
-            response = requests.get(url, headers=headers)
-        else:
-            response = requests.post(url, headers=headers, json=payload)
-        logger.info(f'{postman.method} request {url} response {response.status_code}')
-
-        response.raise_for_status()
         try:
-            res = response.json()
-            if isinstance(res, dict):
-                res = [res]
-        except ValueError:
+            logger.info(f'Debug 5')
+            logger.info(f'Request {postman.method} {url}')
+            '''
+            '''
+            if postman.method == "GET":
+                response = requests.get(url, headers=headers)
+            else:
+                response = requests.post(url, headers=headers, json=payload)
+            logger.info(f'{postman.method} request {url} response {response.status_code}')
+            response.raise_for_status()
+            try:
+                res = response.json()
+                if isinstance(res, dict):
+                    res = [res]
+            except ValueError:
+                logger.error(f'HTTP error: {response.reason}')
+                res = []
+        except BaseException as err:
             res = []
+            logger.error(f"Unexpected {err=}, {type(err)=}")
+
         return res
 
     def get_authorization_token(self):

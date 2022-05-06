@@ -214,13 +214,6 @@
               "number"
             ]
           },
-          "payments": {
-            "type": [
-              "null",
-              "array"
-            ],
-            "items": {}
-          },
           "paymentStatus": {
             "type": [
               "null",

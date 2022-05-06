@@ -7,6 +7,7 @@ from tap_toast.context import Context
 
 logger = singer.get_logger()
 
+
 def discover_streams(client):
     streams = []
 

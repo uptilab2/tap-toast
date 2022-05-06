@@ -1282,7 +1282,7 @@
 			]
 		},
 		{
-			"name": "Orders bulk",
+			"name": "orders",
 			"request": {
 				"method": "GET",
 				"header": [

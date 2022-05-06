@@ -6,7 +6,7 @@
 	},
 	"item": [
 		{
-			"name": "Authentication token",
+			"name": "authentication",
 			"event": [
 				{
 					"listen": "test",

@@ -4,6 +4,8 @@
 #
 
 import json
+import os.path
+
 import singer
 from singer import metadata
 from singer import utils
@@ -33,37 +35,42 @@ class Stream:
     stream = None
     session_bookmark = None
     postman = None
-    postman_item = None
 
-    def __init__(self, name, client=None, postman_item=None):
+    def __init__(self, name, client=None):
         self.name = name
         self.client = client
-        if postman_item is not None:
-            self.postman_item = postman_item
-            self.postman = Postman(name, postman_item)
+        self.postman = Postman(name)
 
     def get_bookmark(self, state):
-        return singer.get_bookmark(state, self.name, self.replication_key)
+        bookmark = singer.get_bookmark(state, self.name, self.replication_key)
+        if bookmark is None:
+            singer.write_bookmark(state, self.name, self.replication_key, None)
+            bookmark = singer.get_bookmark(state, self.name, self.replication_key)
+        return bookmark
 
     def update_bookmark(self, state, value):
-        if self.is_bookmark_old(state, value):
-            singer.write_bookmark(state, self.name, self.replication_key, value)
+        # if self.is_bookmark_old(state, value):
+        singer.write_bookmark(state, self.name, self.replication_key, value)
 
     def is_bookmark_old(self, state, value):
         current_bookmark = self.get_bookmark(state)
         return utils.strptime_with_tz(value) > utils.strptime_with_tz(current_bookmark)
 
     def load_schema(self):
-        schema_file = f"schemas/{self.name}.json"
+        schema_file = get_abs_path(f'schemas/{self.name}.json', Context.config.get('base_path'))
+        if not os.path.exists(schema_file):
+            raise f'Schema file not found at {schema_file}'
         logger.info(f'Load schema from {schema_file}')
-        with open(get_abs_path(schema_file, Context.config.get('base_path'))) as f:
+        with open(schema_file) as f:
             schema = json.load(f)
         return schema
 
     def load_metadata(self, schema):
-        meta_file = f"metadatas/{self.name}.json"
+        meta_file = get_abs_path(f'metadatas/{self.name}.json', Context.config.get('base_path'))
+        if not os.path.exists(meta_file):
+            raise f'Metadata file not found at {meta_file}'
         logger.info(f'Load metadata from {meta_file}')
-        with open(get_abs_path(meta_file, Context.config.get('base_path'))) as f:
+        with open(meta_file) as f:
             meta = json.load(f)
 
         mdata = metadata.new()
