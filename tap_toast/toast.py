@@ -46,12 +46,14 @@ class Toast(object):
         payload = postman.payload
         headers = postman.headers
         url = postman.url
+        logger.info(f'{postman.method} request {url}')
         if postman.method == "GET":
             response = requests.get(url, headers=headers)
         else:
             response = requests.post(url, headers=headers, json=payload)
+        logger.info(f'{postman.method} request {url} response {response.status_code}')
+
         response.raise_for_status()
-        logger.info('GET request successful at {url}'.format(url=url))
         try:
             res = response.json()
             if isinstance(res, dict):
@@ -64,7 +66,9 @@ class Toast(object):
         payload = self.authentication.payload
         headers = self.authentication.headers
         url = self.authentication.url
+        logger.info(f'POST authentication request {url}')
         response = requests.post(url, data=payload, headers=headers)
+        logger.info(f'POST authentication request {url} response {response.status_code}')
         response.raise_for_status()
         res = response.json()
         self.authentication.setToken(res)

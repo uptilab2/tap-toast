@@ -14,7 +14,6 @@ from tap_toast.utils import get_abs_path
 
 
 logger = singer.get_logger()
-KEY_PROPERTIES = ['guid']
 
 
 def needs_parse_to_date(string):
@@ -32,7 +31,6 @@ class Stream:
     replication_method = None
     replication_key = None
     stream = None
-    key_properties = KEY_PROPERTIES
     session_bookmark = None
     postman = None
     postman_item = None
@@ -57,14 +55,14 @@ class Stream:
 
     def load_schema(self):
         schema_file = f"schemas/{self.name}.json"
+        logger.info(f'Load schema from {schema_file}')
         with open(get_abs_path(schema_file, Context.config.get('base_path'))) as f:
             schema = json.load(f)
         return schema
 
     def load_metadata(self, schema):
-        # schema = self.load_schema()
-
         meta_file = f"metadatas/{self.name}.json"
+        logger.info(f'Load metadata from {meta_file}')
         with open(get_abs_path(meta_file, Context.config.get('base_path'))) as f:
             meta = json.load(f)
 
@@ -94,6 +92,8 @@ class Stream:
     def sync(self, state):
         bookmark = self.get_bookmark(state)
         res = self.client.request(self.postman)
+
+        logger.info(f'Sync {self.name}, res.length: {len(res)}')
 
         for item in res:
             if self.replication_method == "INCREMENTAL":

@@ -5,6 +5,7 @@ import re
 from tap_toast.utils import get_abs_path
 from tap_toast.context import Context
 
+logger = singer.get_logger()
 
 def discover_streams(client):
     streams = []
@@ -15,6 +16,7 @@ def discover_streams(client):
             s = Stream(m.group(1), client)
             schema = singer.resolve_schema_references(s.load_schema())
             metadata = s.load_metadata(schema)
+            logger.info(f'Discover => stream: {s.name}, stream_alias: {s.postman_item}, tap_stream_id: {s.name}')
             streams.append({'stream': s.name, 'stream_alias': s.postman_item, 'tap_stream_id': s.name, 'schema': schema,
                             'metadata': metadata})
     return streams

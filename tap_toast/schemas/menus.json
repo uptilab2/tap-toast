@@ -6,8 +6,7 @@
   "properties": {
     "guid": {
       "type": [
-        "null",
-        "string"
+       "string"
       ]
     },
     "entityType": {

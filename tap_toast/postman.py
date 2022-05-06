@@ -4,7 +4,9 @@ from tap_toast.context import Context
 from jsonpath_ng import parse
 from tap_toast.utils import get_abs_path
 from base64 import b64encode
+import singer
 
+logger = singer.get_logger()
 
 def setVars(string):
     for group in re.findall(r'{{([a-zA-Z_-]*)}}', string):
@@ -23,9 +25,13 @@ class Postman:
     events = []
     request = None
     authentication = None
+    name = None
 
     def __init__(self, name, key):
-        file = json.load(open(get_abs_path(f'postman/{name}.json', Context.config.get('base_path'))))
+        self.name = name
+        filename = get_abs_path(f'postman/{name}.json', Context.config.get('base_path'))
+        logger.info(f'Read Postman from {filename}')
+        file = json.load(open(filename))
         self.readItemConfig(file, key)
         self.authentication = None if 'auth' not in file else file['auth']['type']
 
@@ -103,4 +109,5 @@ class Postman:
                     for key in var.keys():
                         expr = parse(var[key])
                         val = expr.find(res)
+                        logger.info(f'Postman {self.name}, setToken to var {key}')
                         Context.config[key] = val[0].value if res is not None else None
