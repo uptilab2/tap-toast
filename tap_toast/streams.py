@@ -59,7 +59,7 @@ class Stream:
     def load_schema(self):
         schema_file = get_abs_path(f'schemas/{self.name}.json', Context.config.get('base_path'))
         if not os.path.exists(schema_file):
-            raise f'Schema file not found at {schema_file}'
+            raise NameError(f'Schema file not found at {schema_file}')
         logger.info(f'Load schema from {schema_file}')
         with open(schema_file) as f:
             schema = json.load(f)
@@ -68,7 +68,7 @@ class Stream:
     def load_metadata(self, schema):
         meta_file = get_abs_path(f'metadatas/{self.name}.json', Context.config.get('base_path'))
         if not os.path.exists(meta_file):
-            raise f'Metadata file not found at {meta_file}'
+            raise NameError(f'Metadata file not found at {meta_file}')
         logger.info(f'Load metadata from {meta_file}')
         with open(meta_file) as f:
             meta = json.load(f)
