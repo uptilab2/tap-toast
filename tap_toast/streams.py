@@ -41,6 +41,10 @@ class Stream:
         self.client = client
         self.postman = Postman(name)
 
+    @property
+    def isValid(self):
+        return self.postman.isValid
+
     def get_bookmark(self, state):
         bookmark = singer.get_bookmark(state, self.name, self.replication_key)
         if bookmark is None:

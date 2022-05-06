@@ -70,6 +70,8 @@ def do_sync(client, catalog, state):
 
         LOGGER.info("%s: Starting sync", stream_name)
         instance = Stream(stream_name, client)
+        if not instance.isValid:
+            raise NameError(f'Stream {stream_name} missing postman file')
         instance.stream = stream
         counter_value = sync_stream(state, instance)
         LOGGER.info("%s: Completed sync (%s rows)", stream_name, counter_value)

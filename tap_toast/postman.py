@@ -32,13 +32,15 @@ class Postman:
         self.name = name
         filename = get_abs_path(f'postman/{self.name}.json', Context.config.get('base_path'))
         if not os.path.exists(filename):
-            raise NameError(f'Postman file not found at {filename}')
+            return
         logger.info(f'Read Postman from {filename}')
         file = json.load(open(filename))
         self.readItemConfig(file)
         if self.request is None:
             raise NameError(f'Item {name} not found in postman file {filename}')
         self.authentication = None if 'auth' not in file else file['auth']['type']
+
+
 
     def readItemConfig(self, file):
         for item in file['item']:
@@ -52,6 +54,10 @@ class Postman:
     @property
     def isAnonymous(self):
         return self.authentication is None
+
+    @property
+    def isValid(self):
+        return self.request is not None
 
     @property
     def is_authorized(self):

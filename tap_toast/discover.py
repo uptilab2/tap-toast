@@ -15,10 +15,11 @@ def discover_streams(client):
         m = re.match(r'([a-zA-Z_]+)\.json', f)
         if m is not None:
             s = Stream(m.group(1), client)
-            schema = singer.resolve_schema_references(s.load_schema())
-            metadata = s.load_metadata(schema)
-            logger.info(f'Discover => stream: {s.name}, stream_alias: {s.postman_item}, tap_stream_id: {s.name}')
-            streams.append({'stream': s.name, 'stream_alias': s.postman_item, 'tap_stream_id': s.name, 'schema': schema,
-                            'metadata': metadata})
+            if s.isValid:
+                schema = singer.resolve_schema_references(s.load_schema())
+                metadata = s.load_metadata(schema)
+                logger.info(f'Discover => stream: {s.name}, stream_alias: {s.postman_item}, tap_stream_id: {s.name}')
+                streams.append({'stream': s.name, 'stream_alias': s.postman_item, 'tap_stream_id': s.name, 'schema': schema,
+                                'metadata': metadata})
     return streams
 
