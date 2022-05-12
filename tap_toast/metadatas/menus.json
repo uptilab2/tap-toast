@@ -1,5 +1,16 @@
 {
     "replication_method": "FULL_TABLE",
-    "key_properties": ["restaurantGuid"],
-    "root": "menus"
+    "key_properties": ["guid"],
+    "root": "menus",
+    "root_keys": {
+        "key":  [{
+            "name": "restaurantGuid",
+            "alias": "restId"
+        }],
+        "menus": {
+            "key":  [{
+                "name": "guid"
+            }]
+        }
+    }
 }

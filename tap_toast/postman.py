@@ -9,13 +9,14 @@ import singer
 
 logger = singer.get_logger()
 
+
 def setVars(string):
     for group in re.findall(r'{{([a-zA-Z_-]*)}}', string):
         string = string.replace(f'{{{{{group}}}}}', Context.config[group])
     return string
 
 
-def getHeaderFromBody (body):
+def getHeaderFromBody(body):
     if body['mode'] == 'raw':
         if 'options' in body:
             if body['options']['raw']['language'] == 'json':
@@ -39,8 +40,6 @@ class Postman:
         if self.request is None:
             raise NameError(f'Item {name} not found in postman file {filename}')
         self.authentication = None if 'auth' not in file else file['auth']['type']
-
-
 
     def readItemConfig(self, file):
         for item in file['item']:

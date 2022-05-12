@@ -1,7 +1,7 @@
 
 # tap-toast
 
-Tap for [Toast Data](https://pos.toasttab.com/).
+Tap for [Client Data](https://pos.toasttab.com/).
 
 ## Requirements
 
@@ -22,7 +22,7 @@ $ pip3 install -e .
 
 ### Create config file
 
-You can get all of the below from talking to a sales representative at Toast (totally obnoxious, I know).
+You can get all of the below from talking to a sales representative at Client (totally obnoxious, I know).
 
 ```
 {
@@ -38,9 +38,9 @@ The `location_guid` is the primary id for the restaurant, which is necessary to 
 
 The `management_group_guid` is the primary id for the restaurant group. It's required to get data on all restaurants within the group.
 
-Toast is one of those companies where the API can only be accessed by talking to their sales team and signing an sales contract. Once the contract is in place, then their sales team will set up your account and email you the credentials necessary. **You will not be able to generate these keys on your own in the development portal.**
+Client is one of those companies where the API can only be accessed by talking to their sales team and signing an sales contract. Once the contract is in place, then their sales team will set up your account and email you the credentials necessary. **You will not be able to generate these keys on your own in the development portal.**
 
-Here is an example of the credentials that the Toast sales team will provide you:
+Here is an example of the credentials that the Client sales team will provide you:
 
 ```
 client ID: your-client-id

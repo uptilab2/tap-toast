@@ -22,4 +22,3 @@ def discover_streams(client):
                 streams.append({'stream': s.name, 'stream_alias': s.postman_item, 'tap_stream_id': s.name,
                                 'schema': schema, 'metadata': metadata})
     return streams
-

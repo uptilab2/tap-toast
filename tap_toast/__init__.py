@@ -2,7 +2,7 @@ import json
 import sys
 import singer
 from singer import metadata
-from tap_toast.toast import Toast
+from tap_toast.client import Client
 from tap_toast.discover import discover_streams
 from tap_toast.sync import sync_stream
 from tap_toast.streams import Stream
@@ -11,19 +11,10 @@ from tap_toast.context import Context
 
 LOGGER = singer.get_logger()
 
-REQUIRED_CONFIG_KEYS = [
-    "client_id",
-    "client_secret",
-    "location_guid",
-    "start_date",
-    "hostname",
-    "postman"
-]
 
-
-def do_discover(client):
+def do_discover(cli):
     LOGGER.info("Starting discover")
-    catalog = {"streams": discover_streams(client)}
+    catalog = {"streams": discover_streams(cli)}
     json.dump(catalog, sys.stdout, indent=2)
     LOGGER.info("Finished discover")
 
@@ -41,19 +32,7 @@ def get_selected_streams(catalog):
     return selected_stream_names
 
 
-class DependencyException(Exception):
-    pass
-
-
-# def populate_class_schemas(catalog, selected_stream_names):
-#     for stream in catalog.streams:
-#         if stream.tap_stream_id in selected_stream_names:
-#             STREAMS[stream.tap_stream_id].stream = stream
-#
-
-
-
-def do_sync(client, catalog, state):
+def do_sync(cli, catalog, state):
     selected_stream_names = get_selected_streams(catalog)
 
     for stream in catalog.streams:
@@ -68,7 +47,7 @@ def do_sync(client, catalog, state):
         singer.write_schema(stream_name, stream.schema.to_dict(), key_properties)
 
         LOGGER.info("%s: Starting sync", stream_name)
-        instance = Stream(stream_name, client)
+        instance = Stream(stream_name, cli)
         if not instance.isValid:
             raise NameError(f'Stream {stream_name} missing postman file')
         instance.stream = stream
@@ -85,13 +64,13 @@ def main():
     parsed_args = singer.utils.parse_args([])
 
     Context.config = parsed_args.config
-    client = Toast()
+    cli = Client()
 
     if parsed_args.discover:
-        do_discover(client)
+        do_discover(cli)
     elif parsed_args.catalog:
         state = parsed_args.state or {}
-        do_sync(client, parsed_args.catalog, state)
+        do_sync(cli, parsed_args.catalog, state)
     LOGGER.info("Finished tap")
 
 
