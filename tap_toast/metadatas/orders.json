@@ -1,1 +1,12 @@
-{"name": "orders", "replication_method": "INCREMENTAL", "replication_key": "modifiedDate", "key_properties": ["guid"]}
+{
+  "name": "orders",
+  "replication_method": "INCREMENTAL",
+  "replication_key": "modifiedDate",
+  "key_properties": ["guid"],
+    "schema": "menus",
+    "postman": {
+            "filename": "orders",
+            "item": "Orders bulk"
+        }
+
+}

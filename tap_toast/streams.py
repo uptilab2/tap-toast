@@ -47,7 +47,6 @@ class Stream:
     def __init__(self, name, client=None):
         self.name = name
         self.client = client
-        self.postman = Postman(name)
         self.load_masters()
         if 'root' in self.m_metadata:
             self.setRoots(self.m_schema, self.m_metadata['root'].split('.'))
@@ -77,14 +76,18 @@ class Stream:
         meta_file = get_abs_path(f'metadatas/{self.name}.json', Context.config.get('base_path'))
         if not os.path.exists(meta_file):
             raise NameError(f'Metadata file not found at {meta_file}')
-        logger.info(f'Load metadata from {meta_file}')
         with open(meta_file) as f:
             self.m_metadata = json.load(f)
 
-        schema_file = get_abs_path(f'schemas/{self.name}.json', Context.config.get('base_path'))
+        if 'postman' not in self.m_metadata:
+            raise NameError(f'no Postman file define in metadata for stream {self.name}')
+        self.postman = Postman(self.m_metadata["postman"])
+
+        if 'schema' not in self.m_metadata:
+            raise NameError(f'no schema file define in metadata for stream {self.name}')
+        schema_file = get_abs_path(f'schemas/{self.m_metadata["schema"]}.json', Context.config.get('base_path'))
         if not os.path.exists(schema_file):
             raise NameError(f'Schema file not found at {schema_file}')
-        logger.info(f'Load schema from {schema_file}')
         with open(schema_file) as f:
             self.m_schema = json.load(f)
 
@@ -190,9 +193,16 @@ class Stream:
                 additional_keys.append({key['alias']: val})
 
             roots = expr.find(item)
-            for root in roots:
+            for values in roots:
+                rec = values.value
 
-                for record in root.value:
+                if rec is list:
+                    for record in rec:
+                        for key in additional_keys:
+                            record.update(key)
+                        yield self.stream, record
+                else:
                     for key in additional_keys:
-                        record.update(key)
-                    yield self.stream, record
+                        rec.update(key)
+                    yield self.stream, rec
+

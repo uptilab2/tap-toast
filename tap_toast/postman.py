@@ -27,23 +27,22 @@ class Postman:
     events = []
     request = None
     authentication = None
-    name = None
 
-    def __init__(self, name: str):
-        self.name = name
-        filename = get_abs_path(f'postman/{self.name}.json', Context.config.get('base_path'))
+    def __init__(self, postname):
+        name = postname['filename']
+        filename = get_abs_path(f'postman/{name}.json', Context.config.get('base_path'))
         if not os.path.exists(filename):
             return
-        logger.info(f'Read Postman from {filename}')
+        logger.info(f'Read Postman from "{filename}"')
         file = json.load(open(filename))
-        self.readItemConfig(file)
+        self.readItemConfig(file, postname['item'])
         if self.request is None:
-            raise NameError(f'Item {name} not found in postman file {filename}')
+            raise NameError(f'Item "{postname["item"]}" not found in postman file "{filename}"')
         self.authentication = None if 'auth' not in file else file['auth']['type']
 
-    def readItemConfig(self, file):
+    def readItemConfig(self, file, name):
         for item in file['item']:
-            if item['name'] == self.name:
+            if item['name'] == name:
                 self.request = item['request']
                 if 'event' in item:
                     for event in item['event']:
@@ -119,5 +118,5 @@ class Postman:
                     for key in var.keys():
                         expr = parse(var[key])
                         val = expr.find(res)
-                        logger.info(f'Postman {self.name}, setToken to var {key}')
+                        logger.info(f'Postman, setToken to var {key}')
                         Context.config[key] = val[0].value if res is not None else None
