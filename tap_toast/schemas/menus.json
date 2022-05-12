@@ -1,81 +1,287 @@
 {
-  "type": [
-    "null",
-    "object"
-  ],
-  "properties": {
-    "guid": {
-      "type": [
-       "string"
-      ]
-    },
-    "entityType": {
-      "type": [
-        "null",
-        "string"
-      ]
-    },
-    "externalId": {
-      "type": [
-        "null",
-        "string"
-      ]
-    },
-    "visibility": {
-      "type": [
-        "null",
-        "string"
-      ]
-    },
-    "unitOfMeasure": {
-      "type": [
-        "null",
-        "string"
-      ]
-    },
-    "orderableOnline": {
-      "type": [
-        "null",
-        "string"
-      ]
-    },
-    "name": {
-      "type": [
-        "null",
-        "string"
-      ]
-    },
-    "groups": {
-      "type": [
-        "null",
-        "array"
-      ],
-      "items": {
-        "type": [
-          "null",
-          "object"
-        ],
-        "properties": {
-          "guid": {
-            "type": [
-              "null",
-              "string"
-            ]
-          },
-          "entityType": {
-            "type": [
-              "null",
-              "string"
-            ]
-          },
-          "externalId": {
-            "type": [
-              "null",
-              "string"
-            ]
-          }
+    "type": ["null", "object"],
+    "properties": {
+        "restaurantGuid": {
+            "type": ["null", "string"]
+        },
+        "lastUpdated": {
+            "type": ["null", "string"]
+        },
+        "restaurantTimeZone": {
+            "type": ["null", "string"]
+        },
+        "menus": {
+            "type": ["null", "array"],
+            "items": {
+                "type": ["null", "object"],
+                "properties": {
+                    "entityType": {
+                        "type": ["null", "string"]
+                    },
+                    "name": {
+                        "type": ["null", "string"]
+                    },
+                    "guid": {
+                        "type": ["null", "string"]
+                    },
+                    "multiLocationId": {
+                        "type": ["null", "string"]
+                    },
+                    "masterId": {
+                        "type": ["null", "integer"]
+                    },
+                    "description": {
+                        "type": ["null", "string"]
+                    },
+                    "highResImage": {
+                        "type": ["null", "string"]
+                    },
+                    "image": {
+                        "type": ["null", "string"]
+                    },
+                    "visibility": {
+                        "type": ["null", "array"],
+                        "items": {
+                            "type": ["null", "string"]
+                        }
+                    },
+                    "menuGroups": {
+                        "type": ["null", "array"],
+                        "items": {
+                            "type": ["null", "object"],
+                            "properties": {
+                                "entityType": {
+                                    "type": ["null", "string"]
+                                },
+                                "name": {
+                                    "type": ["null", "string"]
+                                },
+                                "guid": {
+                                    "type": ["null", "string"]
+                                },
+                                "description": {
+                                    "type": ["null", "string"]
+                                },
+                                "itemTags": {
+                                    "type": ["null", "array"],
+                                    "items": {
+                                        "type": ["null", "object"],
+                                        "properties": {
+                                            "entityType": {
+                                                "type": ["null", "string"]
+                                            },
+                                            "name": {
+                                                "type": ["null", "string"]
+                                            },
+                                            "guid": {
+                                                "type": ["null", "string"]
+                                            }
+                                        }
+                                    }
+                                },
+                                "menuItems": {
+                                    "type": ["null", "array"],
+                                    "items": {
+                                        "type": ["null", "object"],
+                                        "properties": {
+                                            "entityType": {
+                                                "type": ["null", "string"]
+                                            },
+                                            "name": {
+                                                "type": ["null", "string"]
+                                            },
+                                            "guid": {
+                                                "type": ["null", "string"]
+                                            },
+                                            "description": {
+                                                "type": ["null", "string"]
+                                            },
+                                            "price": {
+                                                "type": ["null", "number"]
+                                            },
+                                            "pricingStrategy": {
+                                                "type": ["null", "string"]
+                                            },
+                                            "pricingRules": {
+                                                "type": ["null", "object"],
+                                                    "properties": {
+                                                        "entityType": {
+                                                            "type": ["null", "string"]
+                                                        },
+                                                        "timeSpecificPricingRules": {
+                                                            "type": ["null", "array"],
+                                                            "items": {
+                                                                "type": ["null", "object"],
+                                                                "properties": {
+                                                                    "entityType": {
+                                                                        "type": ["null", "string"]
+                                                                    },
+                                                                    "timeSpecificPrice": {
+                                                                        "type": ["null", "number"]
+                                                                    },
+                                                                    "basePrice": {
+                                                                        "type": ["null", "number"]
+                                                                    },
+                                                                    "schedule": {
+                                                                        "type": ["null", "array"],
+                                                                        "items": {
+                                                                            "type": ["null", "object"],
+                                                                            "properties": {
+                                                                                "entityType": {
+                                                                                    "type": ["null", "string"]
+                                                                                },
+                                                                                "days": {
+                                                                                    "type": ["null", "array"],
+                                                                                    "items": {
+                                                                                        "type": ["null", "string"]
+                                                                                    }
+                                                                                },
+                                                                                "timeRanges": {
+                                                                                    "type": ["null", "array"],
+                                                                                    "items": {
+                                                                                        "type": ["null", "object"],
+                                                                                        "properties": {
+                                                                                            "entityType": {
+                                                                                                "type": ["null", "string"]
+                                                                                            },
+                                                                                            "start": {
+                                                                                                "type": ["null", "string"]
+                                                                                            },
+                                                                                            "end": {
+                                                                                                "type": ["null", "string"]
+                                                                                            }
+                                                                                        }
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        },
+                                                        "sizeSpecificPricingGuid": {
+                                                            "type": ["null", "string"]
+                                                        },
+                                                        "sizeSequencePricingRules": {
+                                                            "type": ["null", "array"],
+                                                            "items": {
+                                                                "type": ["null", "object"],
+                                                                "properties": {
+                                                                    "entityType": {
+                                                                        "type": ["null", "string"]
+                                                                    },
+                                                                    "sizeName": {
+                                                                        "type": ["null", "string"]
+                                                                    },
+                                                                    "sizeGuid": {
+                                                                        "type": ["null", "string"]
+                                                                    },
+                                                                    "sequencePrices": {
+                                                                        "type": ["null", "array"],
+                                                                        "items": {
+                                                                            "type": ["null", "object"],
+                                                                            "properties": {
+                                                                                "entityType": {
+                                                                                    "type": ["null", "string"]
+                                                                                },
+                                                                                "sequence": {
+                                                                                    "type": ["null", "integer"]
+                                                                                },
+                                                                                "price": {
+                                                                                    "type": ["null", "number"]
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                            },
+                                            "isDiscountable": {
+                                                "type": ["null", "boolean"]
+                                            },
+                                            "salesCategory": {
+                                                "type": ["null", "object"],
+                                                "properties": {
+                                                    "entityType": {
+                                                        "type": ["null", "string"]
+                                                    },
+                                                    "name": {
+                                                        "type": ["null", "string"]
+                                                    },
+                                                    "guid": {
+                                                        "type": ["null", "string"]
+                                                    }
+                                                }
+                                            },
+                                            "taxInfo": {
+                                                "type": ["null", "array"],
+                                                "items": {
+                                                    "type": ["null", "string"]
+                                                }
+                                            },
+                                            "taxInclusion": {
+                                                "type": ["null", "string"]
+                                            },
+                                            "plu": {
+                                                "type": ["null", "string"]
+                                            },
+                                            "sku": {
+                                                "type": ["null", "string"]
+                                            },
+                                            "calories": {
+                                                "type": ["null", "integer"]
+                                            },
+                                            "unitOfMeasure": {
+                                                "type": ["null", "string"]
+                                            },
+                                            "portions": {
+                                                "type": ["null", "array"],
+                                                "items": {
+                                                    "type": ["null", "object"],
+                                                    "properties": {
+                                                        "entityType": {
+                                                            "type": ["null", "string"]
+                                                        },
+                                                        "name": {
+                                                            "type": ["null", "string"]
+                                                        },
+                                                        "guid": {
+                                                            "type": ["null", "string"]
+                                                        },
+                                                        "modifierGroupReferences": {
+                                                            "type": ["null", "array"],
+                                                            "items": {
+                                                                "type": ["null", "integer"]
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                            "prepTime": {
+                                                "type": ["null", "integer"]
+                                            },
+                                            "prepStations": {
+                                                "type": ["null", "array"],
+                                                "items": {
+                                                    "type": ["null", "string"]
+                                                }
+                                            },
+                                            "modifierGroupReferences": {
+                                                "type": ["null", "array"],
+                                                "items": {
+                                                    "type": ["null", "integer"]
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
-      }
     }
-  }
 }

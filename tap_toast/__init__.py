@@ -62,7 +62,6 @@ def do_sync(client, catalog, state):
         mdata = metadata.to_map(stream.metadata)
 
         if stream_name not in selected_stream_names:
-            LOGGER.info("%s: Skipping - not selected", stream_name)
             continue
 
         key_properties = metadata.get(mdata, (), 'table-key-properties')

@@ -1,311 +1,1004 @@
 {
-  "type": [
-    "null",
-    "object"
-  ],
-  "properties": {
-    "guid": {
-      "type": [
-        "null",
-        "string"
-      ]
-    },
-    "openedDate": {
-      "type": [
-        "null",
-        "string"
-      ],
-      "format": "date-time"
-    },
-    "modifiedDate": {
-      "type": [
-        "null",
-        "string"
-      ],
-      "format": "date-time"
-    },
-    "checks": {
-      "type": [
-        "null",
-        "array"
-      ],
-      "items": {
-        "type": [
-          "null",
-          "object"
-        ],
-        "properties": {
-          "guid": {
-            "type": [
-              "null",
-              "string"
-            ]
-          },
-          "openedDate": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "format": "date-time"
-          },
-          "closedDate": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "format": "date-time"
-          },
-          "modifiedDate": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "format": "date-time"
-          },
-          "deletedDate": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "format": "date-time"
-          },
-          "deleted": {
-            "type": [
-              "null",
-              "boolean"
-            ]
-          },
-          "selections": {
-            "type": [
-              "null",
-              "array"
-            ],
-            "items": {
-              "type": [
-                "null",
-                "object"
-              ],
-              "properties": {
-                "guid": {
-                  "type": [
-                    "null",
-                    "string"
-                  ]
-                },
-                "quantity": {
-                  "type": [
-                    "null",
-                    "number"
-                  ]
-                },
-                "deferred": {
-                  "type": [
-                    "null",
-                    "boolean"
-                  ]
-                },
-                "price": {
-                  "type": [
-                    "null",
-                    "number"
-                  ]
-                },
-                "tax": {
-                  "type": [
-                    "null",
-                    "number"
-                  ]
-                },
-                "voided": {
-                  "type": [
-                    "null",
-                    "boolean"
-                  ]
-                },
-                "voidDate": {
-                  "type": [
-                    "null",
-                    "string"
-                  ],
-                  "format": "date-time"
-                },
-                "createdDate": {
-                  "type": [
-                    "null",
-                    "string"
-                  ],
-                  "format": "date-time"
-                },
-                "modifiedDate": {
-                  "type": [
-                    "null",
-                    "string"
-                  ],
-                  "format": "date-time"
-                },
-                "fulfillmentStatus": {
-                  "type": [
-                    "null",
-                    "string"
-                  ]
-                },
-                "displayName": {
-                  "type": [
-                    "null",
-                    "string"
-                  ]
-                }
-              }
-            }
-          },
-          "customer": {
-            "type": [
-              "null",
-              "object"
-            ],
+    "type": ["null", "object"],
+    "properties": {
+        "guid": {
+            "type": ["null", "string"]
+        },
+        "openedDate": {
+            "type": ["null", "string"]
+        },
+        "modifiedDate": {
+            "type": ["null", "string"]
+        },
+        "promisedDate": {
+            "type": ["null", "string"]
+        },
+        "diningOption": {
+            "type": ["null", "object"],
             "properties": {
-              "guid": {
-                "type": [
-                  "null",
-                  "string"
-                ]
-              },
-              "firstName": {
-                "type": [
-                  "null",
-                  "string"
-                ]
-              },
-              "lastName": {
-                "type": [
-                  "null",
-                  "string"
-                ]
-              },
-              "phone": {
-                "type": [
-                  "null",
-                  "string"
-                ]
-              },
-              "email": {
-                "type": [
-                  "null",
-                  "string"
-                ]
-              }
+                "guid": {
+                    "type": ["null", "string"]
+                },
+                "entityType": {
+                    "type": ["null", "string"]
+                }
             }
-          },
-          "amount": {
-            "type": [
-              "null",
-              "number"
-            ]
-          },
-          "taxAmount": {
-            "type": [
-              "null",
-              "number"
-            ]
-          },
-          "totalAmount": {
-            "type": [
-              "null",
-              "number"
-            ]
-          },
-          "paymentStatus": {
-            "type": [
-              "null",
-              "string"
-            ]
-          },
-          "paidDate": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "format": "date-time"
-          },
-          "voidDate": {
-            "type": [
-              "null",
-              "string"
-            ],
-            "format": "date-time"
-          },
-          "voidBusinessDate": {
-            "type": [
-              "null",
-              "integer"
-            ]
-          },
-          "voided": {
-            "type": [
-              "null",
-              "boolean"
-            ]
-          }
+        },
+        "checks": {
+            "type": ["null", "array"],
+            "items": {
+                "type": ["null", "object"],
+                "properties": {
+                    "guid": {
+                        "type": ["null", "string"]
+                    },
+                    "entityType": {
+                        "type": ["null", "string"]
+                    },
+                    "createdDate": {
+                        "type": ["null", "string"]
+                    },
+                    "openedDate": {
+                        "type": ["null", "string"]
+                    },
+                    "closedDate": {
+                        "type": ["null", "string"]
+                    },
+                    "modifiedDate": {
+                        "type": ["null", "string"]
+                    },
+                    "deletedDate": {
+                        "type": ["null", "string"]
+                    },
+                    "deleted": {
+                        "type": ["null", "boolean"]
+                    },
+                    "selections": {
+                        "type": ["null", "array"],
+                        "items": {
+                            "type": ["null", "object"],
+                            "properties": {
+                                "guid": {
+                                    "type": ["null", "string"]
+                                },
+                                "entityType": {
+                                    "type": ["null", "string"]
+                                },
+                                "item": {
+                                    "type": ["null", "object"],
+                                    "properties": {
+                                        "guid": {
+                                            "type": ["null", "string"]
+                                        },
+                                        "entityType": {
+                                            "type": ["null", "string"]
+                                        },
+                                        "multiLocationId": {
+                                            "type": ["null", "string"]
+                                        },
+                                        "externalId": {
+                                            "type": ["null", "string"]
+                                        }
+                                    }
+                                },
+                                "preModifier": {
+                                    "type": ["null", "object"],
+                                    "properties": {
+                                        "guid": {
+                                            "type": ["null", "string"]
+                                        },
+                                        "entityType": {
+                                            "type": ["null", "string"]
+                                        }
+                                    }
+                                },
+                                "quantity": {
+                                    "type": ["null", "number"]
+                                },
+                                "seatNumber": {
+                                    "type": ["null", "integer"]
+                                },
+                                "unitOfMeasure": {
+                                    "type": ["null", "string"]
+                                },
+                                "selectionType": {
+                                    "type": ["null", "string"]
+                                },
+                                "salesCategory": {
+                                    "type": ["null", "object"],
+                                    "properties": {
+                                        "guid": {
+                                            "type": ["null", "string"]
+                                        },
+                                        "entityType": {
+                                            "type": ["null", "string"]
+                                        }
+                                    }
+                                },
+                                "appliedDiscounts": {
+                                    "type": ["null", "array"],
+                                    "items": {
+                                        "type": ["null", "object"],
+                                        "properties": {
+                                            "guid": {
+                                                "type": ["null", "string"]
+                                            },
+                                            "entityType": {
+                                                "type": ["null", "string"]
+                                            },
+                                            "name": {
+                                                "type": ["null", "string"]
+                                            },
+                                            "discountAmount": {
+                                                "type": ["null", "number"]
+                                            },
+                                            "nonTaxDiscountAmount": {
+                                                "type": ["null", "number"]
+                                            },
+                                            "discount": {
+                                                "type": ["null", "object"],
+                                                "properties": {
+                                                    "entityType": {
+                                                        "type": ["null", "string"]
+                                                    },
+                                                    "guid": {
+                                                        "type": ["null", "string"]
+                                                    }
+                                                }
+                                            },
+                                            "triggers": {
+                                                "type": ["null", "array"],
+                                                "items": {
+                                                    "type": ["null", "object"],
+                                                    "properties": {
+                                                        "entityType": {
+                                                            "type": ["null", "string"]
+                                                        },
+                                                        "selection": {
+                                                            "type": ["null", "object"],
+                                                            "properties": {
+                                                                "guid": {
+                                                                    "type": ["null", "string"]
+                                                                },
+                                                                "entityType": {
+                                                                    "type": ["null", "string"]
+                                                                }
+                                                            }
+                                                        },
+                                                        "quantity": {
+                                                            "type": ["null", "number"]
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                            "approver": {
+                                                "type": ["null", "object"],
+                                                "properties": {
+                                                    "guid": {
+                                                        "type": ["null", "string"]
+                                                    },
+                                                    "entityType": {
+                                                        "type": ["null", "string"]
+                                                    }
+                                                }
+                                            },
+                                            "processingState": {
+                                                "type": ["null", "string"]
+                                            },
+                                            "loyaltyDetails": {
+                                                "type": ["null", "object"],
+                                                "properties": {
+                                                    "entityType": {
+                                                        "type": ["null", "string"]
+                                                    },
+                                                    "vendor": {
+                                                        "type": ["null", "string"]
+                                                    },
+                                                    "referenceId": {
+                                                        "type": ["null", "string"]
+                                                    }
+                                                }
+                                            },
+                                            "comboItems": {
+                                                "type": ["null", "array"],
+                                                "items": {
+                                                    "type": ["null", "object"],
+                                                    "properties": {
+                                                        "guid": {
+                                                            "type": ["null", "string"]
+                                                        },
+                                                        "entityType": {
+                                                            "type": ["null", "string"]
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                            "appliedPromoCode": {
+                                                "type": ["null", "string"]
+                                            },
+                                            "discountType": {
+                                                "type": ["null", "string"]
+                                            },
+                                            "discountPercent": {
+                                                "type": ["null", "number"]
+                                            }
+                                        }
+                                    }
+                                },
+                                "deferred": {
+                                    "type": ["null", "boolean"]
+                                },
+                                "preDiscountPrice": {
+                                    "type": ["null", "number"]
+                                },
+                                "price": {
+                                    "type": ["null", "number"]
+                                },
+                                "tax": {
+                                    "type": ["null", "number"]
+                                },
+                                "voided": {
+                                    "type": ["null", "boolean"]
+                                },
+                                "voidDate": {
+                                    "type": ["null", "string"]
+                                },
+                                "voidBusinessDate": {
+                                    "type": ["null", "integer"]
+                                },
+                                "voidReason": {
+                                    "type": ["null", "object"],
+                                    "properties": {
+                                        "guid": {
+                                            "type": ["null", "string"]
+                                        },
+                                        "entityType": {
+                                            "type": ["null", "string"]
+                                        }
+                                    }
+                                },
+                                "refundDetails": {
+                                    "type": ["null", "object"],
+                                    "properties": {
+                                        "entityType": {
+                                            "type": ["null", "string"]
+                                        },
+                                        "refundAmount": {
+                                            "type": ["null", "number"]
+                                        },
+                                        "taxRefundAmount": {
+                                            "type": ["null", "number"]
+                                        }
+                                    }
+                                },
+                                "displayName": {
+                                    "type": ["null", "string"]
+                                },
+                                "createdDate": {
+                                    "type": ["null", "string"]
+                                },
+                                "modifiedDate": {
+                                    "type": ["null", "string"]
+                                },
+                                "fulfillmentStatus": {
+                                    "type": ["null", "string"]
+                                },
+                                "taxInclusion": {
+                                    "type": ["null", "string"]
+                                },
+                                "appliedTaxes": {
+                                    "type": ["null", "array"],
+                                    "items": {
+                                        "type": ["null", "object"],
+                                        "properties": {
+                                            "guid": {
+                                                "type": ["null", "string"]
+                                            },
+                                            "entityType": {
+                                                "type": ["null", "string"]
+                                            },
+                                            "name": {
+                                                "type": ["null", "string"]
+                                            },
+                                            "rate": {
+                                                "type": ["null", "number"]
+                                            },
+                                            "taxAmount": {
+                                                "type": ["null", "number"]
+                                            },
+                                            "type": {
+                                                "type": ["null", "string"]
+                                            },
+                                            "facilitatorCollectAndRemitTax": {
+                                                "type": ["null", "boolean"]
+                                            }
+                                        }
+                                    }
+                                },
+                                "diningOption": {
+                                    "type": ["null", "object"],
+                                    "properties": {
+                                        "guid": {
+                                            "type": ["null", "string"]
+                                        },
+                                        "entityType": {
+                                            "type": ["null", "string"]
+                                        }
+                                    }
+                                },
+                                "openPriceAmount": {
+                                    "type": ["null", "number"]
+                                },
+                                "receiptLinePrice": {
+                                    "type": ["null", "number"]
+                                },
+                                "optionGroupPricingMode": {
+                                    "type": ["null", "string"]
+                                },
+                                "externalPriceAmount": {
+                                    "type": ["null", "number"]
+                                },
+                                "storedValueTransactionId": {
+                                    "type": ["null", "number"]
+                                }
+                            }
+                        }
+                    },
+                    "customer": {
+                        "type": ["null", "object"],
+                        "properties": {
+                            "guid": {
+                                "type": ["null", "string"]
+                            },
+                            "entityType": {
+                                "type": ["null", "string"]
+                            },
+                            "firstName": {
+                                "type": ["null", "string"]
+                            },
+                            "lastName": {
+                                "type": ["null", "string"]
+                            },
+                            "phone": {
+                                "type": ["null", "string"]
+                            },
+                            "phoneToken": {
+                                "type": ["null", "string"]
+                            },
+                            "email": {
+                                "type": ["null", "string"]
+                            },
+                            "emailToken": {
+                                "type": ["null", "string"]
+                            }
+                        }
+                    },
+                    "appliedLoyaltyInfo": {
+                        "type": ["null", "object"],
+                        "properties": {
+                            "guid": {
+                                "type": ["null", "string"]
+                            },
+                            "entityType": {
+                                "type": ["null", "string"]
+                            },
+                            "loyaltyIdentifier": {
+                                "type": ["null", "string"]
+                            },
+                            "maskedLoyaltyIdentifier": {
+                                "type": ["null", "string"]
+                            },
+                            "vendor": {
+                                "type": ["null", "string"]
+                            },
+                            "accrualFamilyGuid": {
+                                "type": ["null", "string"]
+                            },
+                            "accrualText": {
+                                "type": ["null", "string"]
+                            }
+                        }
+                    },
+                    "taxExempt": {
+                        "type": ["null", "boolean"]
+                    },
+                    "displayNumber": {
+                        "type": ["null", "string"]
+                    },
+                    "appliedServiceCharges": {
+                        "type": ["null", "array"],
+                        "items": {
+                            "type": ["null", "object"],
+                            "properties": {
+                                "guid": {
+                                    "type": ["null", "string"]
+                                },
+                                "entityType": {
+                                    "type": ["null", "string"]
+                                },
+                                "chargeAmount": {
+                                    "type": ["null", "number"]
+                                },
+                                "serviceCharge": {
+                                    "type": ["null", "object"],
+                                    "properties": {
+                                        "guid": {
+                                            "type": ["null", "string"]
+                                        },
+                                        "entityType": {
+                                            "type": ["null", "string"]
+                                        }
+                                    }
+                                },
+                                "chargeType": {
+                                    "type": ["null", "string"]
+                                },
+                                "name": {
+                                    "type": ["null", "string"]
+                                },
+                                "delivery": {
+                                    "type": ["null", "boolean"]
+                                },
+                                "takeout": {
+                                    "type": ["null", "boolean"]
+                                },
+                                "dineIn": {
+                                    "type": ["null", "boolean"]
+                                },
+                                "gratuity": {
+                                    "type": ["null", "boolean"]
+                                },
+                                "taxable": {
+                                    "type": ["null", "boolean"]
+                                },
+                                "serviceChargeCalculation": {
+                                    "type": ["null", "string"]
+                                }
+                            }
+                        }
+                    },
+                    "amount": {
+                        "type": ["null", "number"]
+                    },
+                    "taxAmount": {
+                        "type": ["null", "number"]
+                    },
+                    "totalAmount": {
+                        "type": ["null", "number"]
+                    },
+                    "payments": {
+                        "type": ["null", "array"],
+                        "items": {
+                            "type": ["null", "object"],
+                            "properties": {
+                                "guid": {
+                                    "type": ["null", "string"]
+                                },
+                                "entityType": {
+                                    "type": ["null", "string"]
+                                },
+                                "paidDate": {
+                                    "type": ["null", "string"]
+                                },
+                                "paidBusinessDate": {
+                                    "type": ["null", "integer"]
+                                },
+                                "type": {
+                                    "type": ["null", "string"]
+                                },
+                                "cardEntryMode": {
+                                    "type": ["null", "string"]
+                                },
+                                "amount": {
+                                    "type": ["null", "number"]
+                                },
+                                "tipAmount": {
+                                    "type": ["null", "number"]
+                                },
+                                "amountTendered": {
+                                    "type": ["null", "number"]
+                                },
+                                "cardType": {
+                                    "type": ["null", "string"]
+                                },
+                                "last4Digits": {
+                                    "type": ["null", "string"]
+                                },
+                                "originalProcessingFee": {
+                                    "type": ["null", "number"]
+                                },
+                                "server": {
+                                    "type": ["null", "object"],
+                                    "properties": {
+                                        "guid": {
+                                            "type": ["null", "string"]
+                                        },
+                                        "entityType": {
+                                            "type": ["null", "string"]
+                                        }
+                                    }
+                                },
+                                "referenceCode": {
+                                    "type": ["null", "string"]
+                                },
+                                "cashDrawer": {
+                                    "type": ["null", "object"],
+                                    "properties": {
+                                        "guid": {
+                                            "type": ["null", "string"]
+                                        },
+                                        "entityType": {
+                                            "type": ["null", "string"]
+                                        }
+                                    }
+                                },
+                                "refundStatus": {
+                                    "type": ["null", "string"]
+                                },
+                                "refund": {
+                                    "type": ["null", "object"],
+                                    "properties": {
+                                        "entityType": {
+                                            "type": ["null", "string"]
+                                        },
+                                        "refundAmount": {
+                                            "type": ["null", "number"]
+                                        },
+                                        "tipRefundAmount": {
+                                            "type": ["null", "number"]
+                                        },
+                                        "refundDate": {
+                                            "type": ["null", "string"]
+                                        },
+                                        "refundBusinessDate": {
+                                            "type": ["null", "integer"]
+                                        },
+                                        "refundStrategy": {
+                                            "type": ["null", "string"]
+                                        }
+                                    }
+                                },
+                                "paymentStatus": {
+                                    "type": ["null", "string"]
+                                },
+                                "voidInfo": {
+                                    "type": ["null", "object"],
+                                    "properties": {
+                                        "entityType": {
+                                            "type": ["null", "string"]
+                                        },
+                                        "voidUser": {
+                                            "type": ["null", "object"],
+                                            "properties": {
+                                                "guid": {
+                                                    "type": ["null", "string"]
+                                                },
+                                                "entityType": {
+                                                    "type": ["null", "string"]
+                                                }
+                                            }
+                                        },
+                                        "voidApprover": {
+                                            "type": ["null", "object"],
+                                            "properties": {
+                                                "guid": {
+                                                    "type": ["null", "string"]
+                                                },
+                                                "entityType": {
+                                                    "type": ["null", "string"]
+                                                }
+                                            }
+                                        },
+                                        "voidDate": {
+                                            "type": ["null", "string"]
+                                        },
+                                        "voidBusinessDate": {
+                                            "type": ["null", "integer"]
+                                        },
+                                        "voidReason": {
+                                            "type": ["null", "object"],
+                                            "properties": {
+                                                "guid": {
+                                                    "type": ["null", "string"]
+                                                },
+                                                "entityType": {
+                                                    "type": ["null", "string"]
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "houseAccount": {
+                                    "type": ["null", "object"],
+                                    "properties": {
+                                        "guid": {
+                                            "type": ["null", "string"]
+                                        },
+                                        "entityType": {
+                                            "type": ["null", "string"]
+                                        }
+                                    }
+                                },
+                                "otherPayment": {
+                                    "type": ["null", "object"],
+                                    "properties": {
+                                        "guid": {
+                                            "type": ["null", "string"]
+                                        },
+                                        "entityType": {
+                                            "type": ["null", "string"]
+                                        }
+                                    }
+                                },
+                                "createdDevice": {
+                                    "type": ["null", "object"],
+                                    "properties": {
+                                        "entityType": {
+                                            "type": ["null", "string"]
+                                        },
+                                        "id": {
+                                            "type": ["null", "string"]
+                                        }
+                                    }
+                                },
+                                "mcaRepaymentAmount": {
+                                    "type": ["null", "number"]
+                                },
+                                "cardPaymentId": {
+                                    "type": ["null", "string"]
+                                },
+                                "giftCard": {
+                                    "type": ["null", "object"],
+                                    "properties": {
+                                        "guid": {
+                                            "type": ["null", "string"]
+                                        },
+                                        "entityType": {
+                                            "type": ["null", "string"]
+                                        }
+                                    }
+                                },
+                                "giftCardInfo": {
+                                    "type": ["null", "object"],
+                                    "properties": {
+                                        "guid": {
+                                            "type": ["null", "string"]
+                                        },
+                                        "entityType": {
+                                            "type": ["null", "string"]
+                                        },
+                                        "storedValueBalance": {
+                                            "type": ["null", "number"]
+                                        },
+                                        "rewardsBalance": {
+                                            "type": ["null", "number"]
+                                        },
+                                        "authRequestId": {
+                                            "type": ["null", "string"]
+                                        },
+                                        "authorizationState": {
+                                            "type": ["null", "string"]
+                                        },
+                                        "cardNumberIdentifier": {
+                                            "type": ["null", "string"]
+                                        }
+                                    }
+                                },
+                                "orderGuid": {
+                                    "type": ["null", "string"]
+                                },
+                                "checkGuid": {
+                                    "type": ["null", "string"]
+                                },
+                                "receiptToken": {
+                                    "type": ["null", "string"]
+                                },
+                                "cardHolderFirstName": {
+                                    "type": ["null", "string"]
+                                },
+                                "cardHolderLastName": {
+                                    "type": ["null", "string"]
+                                },
+                                "isProcessedOffline": {
+                                    "type": ["null", "boolean"]
+                                }
+                            }
+                        }
+                    },
+                    "tabName": {
+                        "type": ["null", "string"]
+                    },
+                    "paymentStatus": {
+                        "type": ["null", "string"]
+                    },
+                    "voided": {
+                        "type": ["null", "boolean"]
+                    },
+                    "voidDate": {
+                        "type": ["null", "string"]
+                    },
+                    "voidBusinessDate": {
+                        "type": ["null", "integer"]
+                    },
+                    "paidDate": {
+                        "type": ["null", "string"]
+                    },
+                    "appliedPreauthInfo": {
+                        "type": ["null", "object"],
+                        "properties": {
+                            "entityType": {
+                                "type": ["null", "string"]
+                            },
+                            "guid": {
+                                "type": ["null", "string"]
+                            },
+                            "token": {
+                                "type": ["null", "string"]
+                            },
+                            "oneTimeUse": {
+                                "type": ["null", "boolean"]
+                            },
+                            "preAuthAmount": {
+                                "type": ["null", "number"]
+                            },
+                            "cardType": {
+                                "type": ["null", "string"]
+                            },
+                            "readerType": {
+                                "type": ["null", "string"]
+                            },
+                            "last4CardDigits": {
+                                "type": ["null", "string"]
+                            },
+                            "cardHolderFirstName": {
+                                "type": ["null", "string"]
+                            },
+                            "cardHolderLastName": {
+                                "type": ["null", "string"]
+                            },
+                            "cardHolderhash4": {
+                                "type": ["null", "string"]
+                            },
+                            "cardHolderhash6": {
+                                "type": ["null", "string"]
+                            },
+                            "magStripeName": {
+                                "type": ["null", "string"]
+                            },
+                            "cardHolderExpirationMonth": {
+                                "type": ["null", "string"]
+                            },
+                            "cardHolderExpirationYear": {
+                                "type": ["null", "string"]
+                            },
+                            "useCount": {
+                                "type": ["null", "integer"]
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "table": {
+            "type": ["null", "object"],
+            "properties": {
+                "guid": {
+                    "type": ["null", "string"]
+                },
+                "entityType": {
+                    "type": ["null", "string"]
+                }
+            }
+        },
+        "serviceArea": {
+            "type": ["null", "object"],
+            "properties": {
+                "guid": {
+                    "type": ["null", "string"]
+                },
+                "entityType": {
+                    "type": ["null", "string"]
+                }
+            }
+        },
+        "restaurantService": {
+            "type": ["null", "object"],
+            "properties": {
+                "guid": {
+                    "type": ["null", "string"]
+                },
+                "entityType": {
+                    "type": ["null", "string"]
+                }
+            }
+        },
+        "revenueCenter": {
+            "type": ["null", "object"],
+            "properties": {
+                "guid": {
+                    "type": ["null", "string"]
+                },
+                "entityType": {
+                    "type": ["null", "string"]
+                }
+            }
+        },
+        "source": {
+            "type": ["null", "string"]
+        },
+        "duration": {
+            "type": ["null", "integer"]
+        },
+        "deliveryInfo": {
+            "type": ["null", "object"],
+            "properties": {
+                "entityType": {
+                    "type": ["null", "string"]
+                },
+                "address1": {
+                    "type": ["null", "string"]
+                },
+                "address2": {
+                    "type": ["null", "string"]
+                },
+                "city": {
+                    "type": ["null", "string"]
+                },
+                "state": {
+                    "type": ["null", "string"]
+                },
+                "zipCode": {
+                    "type": ["null", "string"]
+                },
+                "latitude": {
+                    "type": ["null", "number"]
+                },
+                "longitude": {
+                    "type": ["null", "number"]
+                },
+                "notes": {
+                    "type": ["null", "string"]
+                },
+                "deliveredDate": {
+                    "type": ["null", "string"]
+                },
+                "dispatchedDate": {
+                    "type": ["null", "string"]
+                },
+                "deliveryEmployee": {
+                    "type": ["null", "object"],
+                    "properties": {
+                        "guid": {
+                            "type": ["null", "string"]
+                        },
+                        "entityType": {
+                            "type": ["null", "string"]
+                        }
+                    }
+                },
+                "deliveryState": {
+                    "type": ["null", "string"]
+                }
+            }
+        },
+        "requiredPrepTime": {
+            "type": ["null", "string"]
+        },
+        "estimatedFulfillmentDate": {
+            "type": ["null", "string"]
+        },
+        "numberOfGuests": {
+            "type": ["null", "integer"]
+        },
+        "voided": {
+            "type": ["null", "boolean"]
+        },
+        "voidDate": {
+            "type": ["null", "string"]
+        },
+        "voidBusinessDate": {
+            "type": ["null", "integer"]
+        },
+        "paidDate": {
+            "type": ["null", "string"]
+        },
+        "closedDate": {
+            "type": ["null", "string"]
+        },
+        "deletedDate": {
+            "type": ["null", "string"]
+        },
+        "deleted": {
+            "type": ["null", "boolean"]
+        },
+        "businessDate": {
+            "type": ["null", "integer"]
+        },
+        "server": {
+            "type": ["null", "object"],
+            "properties": {
+                "guid": {
+                    "type": ["null", "string"]
+                },
+                "entityType": {
+                    "type": ["null", "string"]
+                }
+            }
+        },
+        "pricingFeatures": {
+            "type": ["null", "array"],
+            "items": {
+                "type": ["null", "string"]
+            }
+        },
+        "approvalStatus": {
+            "type": ["null", "string"]
+        },
+        "guestOrderStatus": {
+            "type": ["null", "string"]
+        },
+        "createdDate": {
+            "type": ["null", "string"]
+        },
+        "initialDate": {
+            "type": ["null", "integer"]
+        },
+        "curbsidePickupInfo": {
+            "type": ["null", "object"],
+            "properties": {
+                "guid": {
+                    "type": ["null", "string"]
+                },
+                "entityType": {
+                    "type": ["null", "string"]
+                },
+                "transportColor": {
+                    "type": ["null", "string"]
+                },
+                "transportDescription": {
+                    "type": ["null", "string"]
+                },
+                "notes": {
+                    "type": ["null", "string"]
+                }
+            }
+        },
+        "deliveryServiceInfo": {
+            "type": ["null", "object"],
+            "properties": {
+                "guid": {
+                    "type": ["null", "string"]
+                },
+                "entityType": {
+                    "type": ["null", "string"]
+                },
+                "providerId": {
+                    "type": ["null", "string"]
+                },
+                "providerName": {
+                    "type": ["null", "string"]
+                },
+                "driverName": {
+                    "type": ["null", "string"]
+                },
+                "driverPhoneNumber": {
+                    "type": ["null", "string"]
+                },
+                "providerInfo": {
+                    "type": ["null", "string"]
+                }
+            }
+        },
+        "marketplaceFacilitatorTaxInfo": {
+            "type": ["null", "object"],
+            "properties": {
+                "entityType": {
+                    "type": ["null", "string"]
+                },
+                "facilitatorCollectAndRemitTaxOrder": {
+                    "type": ["null", "boolean"]
+                }
+            }
         }
-      }
-    },
-    "source": {
-      "type": [
-        "null",
-        "string"
-      ]
-    },
-    "duration": {
-      "type": [
-        "null",
-        "integer"
-      ]
-    },
-    "numberOfGuests": {
-      "type": [
-        "null",
-        "integer"
-      ]
-    },
-    "voided": {
-      "type": [
-        "null",
-        "boolean"
-      ]
-    },
-    "voidDate": {
-      "type": [
-        "null",
-        "string"
-      ],
-      "format": "date-time"
-    },
-    "paidDate": {
-      "type": [
-        "null",
-        "string"
-      ],
-      "format": "date-time"
-    },
-    "closedDate": {
-      "type": [
-        "null",
-        "string"
-      ],
-      "format": "date-time"
-    },
-    "deletedDate": {
-      "type": [
-        "null",
-        "string"
-      ],
-      "format": "date-time"
-    },
-    "deleted": {
-      "type": [
-        "null",
-        "boolean"
-      ]
     }
-  }
 }

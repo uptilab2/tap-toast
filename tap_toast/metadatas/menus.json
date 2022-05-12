@@ -1,4 +1,5 @@
 {
     "replication_method": "FULL_TABLE",
-    "key_properties": ["guid"]
+    "key_properties": ["restaurantGuid"],
+    "root": "menus"
 }

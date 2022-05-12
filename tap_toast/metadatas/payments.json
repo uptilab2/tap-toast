@@ -1,1 +1,0 @@
-{"name": "payments", "replication_method": "INCREMENTAL", "replication_key": "paidDate", "key_properties": ["guid"]}

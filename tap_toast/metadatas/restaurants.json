@@ -1,1 +1,0 @@
-{"name": "restaurants", "replication_method": "FULL_TABLE", "key_properties": ["guid"]}
