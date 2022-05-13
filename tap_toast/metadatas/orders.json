@@ -3,7 +3,7 @@
   "replication_method": "INCREMENTAL",
   "replication_key": "modifiedDate",
   "key_properties": ["guid"],
-    "schema": "menus",
+    "schema": "orders",
     "postman": {
             "filename": "orders",
             "item": "Orders bulk"

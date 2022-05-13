@@ -41,10 +41,11 @@ class Stream:
     schema_root = '$'
     data_root = '$'
     root_key = None
-    additional_keys = []
+    additional_keys = None
     postman_item = None
 
     def __init__(self, name, client=None):
+        self.additional_keys = []
         self.name = name
         self.client = client
         self.load_masters()
@@ -186,23 +187,23 @@ class Stream:
             if self.replication_method == "INCREMENTAL":
                 self.update_bookmark(state, item[self.replication_key])
 
-            additional_keys = []
+            additional_k = []
             for key in self.additional_keys:
                 exp = jparse(key['path'])
                 val = exp.find(item)[0].value
-                additional_keys.append({key['alias']: val})
+                additional_k.append({key['alias']: val})
 
             roots = expr.find(item)
             for values in roots:
                 rec = values.value
 
-                if rec is list:
+                if isinstance(rec, list):
                     for record in rec:
-                        for key in additional_keys:
+                        for key in additional_k:
                             record.update(key)
                         yield self.stream, record
                 else:
-                    for key in additional_keys:
+                    for key in additional_k:
                         rec.update(key)
                     yield self.stream, rec
 
