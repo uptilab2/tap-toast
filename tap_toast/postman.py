@@ -16,6 +16,15 @@ def setVars(string):
     return string
 
 
+def setOptionalVar(string):
+    for group in re.findall(r'{{([a-zA-Z_-]*)}}', string):
+        if group in Context.config:
+            string = string.replace(f'{{{{{group}}}}}', Context.config[group])
+        else:
+            return False, string
+    return True, string
+
+
 def getHeaderFromBody(body):
     if body['mode'] == 'raw':
         if 'options' in body:
@@ -27,6 +36,7 @@ class Postman:
     events = []
     request = None
     authentication = None
+    forced_url = None
 
     def __init__(self, postname):
         name = postname['filename']
@@ -76,6 +86,9 @@ class Postman:
 
     @property
     def url(self):
+        if self.forced_url:
+            return self.forced_url
+
         _url = self.request['url']
         res = _url['host'][0]
         if 'path' in _url:
@@ -84,9 +97,14 @@ class Postman:
         if 'query' in _url:
             qs = ''
             for q in _url['query']:
-                qs = qs + f'&{q["key"]}={q["value"]}'
+                var = setOptionalVar(f'&{q["key"]}={q["value"]}')
+                if var[0]:
+                    qs = qs + var[1]
             res = res + qs.replace('&', '?', 1)
         return setVars(res)
+
+    def setUrl(self, url):
+        self.forced_url = url
 
     @property
     def headers(self):

@@ -2,7 +2,7 @@
 #
 # Module dependencies.
 #
-
+import re
 from datetime import timedelta
 import backoff
 import requests
@@ -39,6 +39,19 @@ class Client(object):
     def _url(path):
         return f'{Context.config["hostname"]}/{path.lstrip("/")}'
 
+    @staticmethod
+    def readNextPage(postman, response):
+        has_next = False
+        if 'link' in response.headers:
+            links = response.headers['link'].split(',')
+            for link in links:
+                groups = re.findall(r'^ ?<(.*)>; ?rel="next"$', link)
+                if groups:
+                    postman.setUrl(groups[0])
+                    has_next = True
+        if not has_next:
+            postman.request = None
+
     @backoff.on_exception(backoff.expo, requests.exceptions.RequestException)
     def request(self, postman):
         if not postman.isAnonymous and not postman.is_authorized:
@@ -47,26 +60,22 @@ class Client(object):
         payload = postman.payload
         headers = postman.headers
         url = postman.url
+
+        logger.info(f'Request {postman.method} {url}')
+        if postman.method == "GET":
+            response = requests.get(url, headers=headers)
+        else:
+            response = requests.post(url, headers=headers, json=payload)
+        logger.info(f'{postman.method} request {url} response {response.status_code}')
+        response.raise_for_status()
+        self.readNextPage(postman, response)
+
         try:
-            logger.info(f'Debug 5')
-            logger.info(f'Request {postman.method} {url}')
-            '''
-            '''
-            if postman.method == "GET":
-                response = requests.get(url, headers=headers)
-            else:
-                response = requests.post(url, headers=headers, json=payload)
-            logger.info(f'{postman.method} request {url} response {response.status_code}')
-            response.raise_for_status()
-            try:
-                res = response.json()
-                if isinstance(res, dict):
-                    res = [res]
-            except ValueError as err:
-                logger.error(f'HTTP error: {response.reason}')
-                raise err
-        except BaseException as err:
-            logger.error(f"Unexpected {err=}, {type(err)=}")
+            res = response.json()
+            if isinstance(res, dict):
+                res = [res]
+        except ValueError as err:
+            logger.error(f'HTTP error: {response.reason}')
             raise err
 
         return res

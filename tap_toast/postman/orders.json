@@ -1304,11 +1304,15 @@
 					"query": [
 						{
 							"key": "startDate",
-							"value": "{{start_date}}"
+							"value": "{{modifiedDate}}"
 						},
 						{
 							"key": "endDate",
 							"value": "{{end_date}}"
+						},
+						{
+							"key": "pageSize",
+							"value": "10"
 						}
 					]
 				}

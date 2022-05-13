@@ -53,10 +53,8 @@ def do_sync(cli, catalog, state):
         instance.stream = stream
         counter_value = sync_stream(state, instance)
         LOGGER.info("%s: Completed sync (%s rows)", stream_name, counter_value)
-        singer.write_state(state)
 
     LOGGER.info("Finished sync")
-    singer.write_state(state)
 
 
 # @singer.utils.handle_top_exception(LOGGER)

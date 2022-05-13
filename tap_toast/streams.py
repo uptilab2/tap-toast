@@ -8,7 +8,7 @@ import os.path
 
 import singer
 from singer import metadata
-from singer import utils
+# from singer import utils
 from dateutil.parser import parse
 from tap_toast.context import Context
 from tap_toast.postman import Postman
@@ -66,12 +66,12 @@ class Stream:
         return bookmark
 
     def update_bookmark(self, state, value):
-        # if self.is_bookmark_old(state, value):
-        singer.write_bookmark(state, self.name, self.replication_key, value)
+        if self.is_bookmark_old(state, value):
+            singer.write_bookmark(state, self.name, self.replication_key, value)
 
     def is_bookmark_old(self, state, value):
         current_bookmark = self.get_bookmark(state)
-        return utils.strptime_with_tz(value) > utils.strptime_with_tz(current_bookmark)
+        return current_bookmark is None or current_bookmark < value
 
     def load_masters(self):
         meta_file = get_abs_path(f'metadatas/{self.name}.json', Context.config.get('base_path'))
@@ -79,6 +79,10 @@ class Stream:
             raise NameError(f'Metadata file not found at {meta_file}')
         with open(meta_file) as f:
             self.m_metadata = json.load(f)
+        if 'replication_method' in self.m_metadata:
+            self.replication_method = self.m_metadata['replication_method']
+        if 'replication_key' in self.m_metadata:
+            self.replication_key = self.m_metadata['replication_key']
 
         if 'postman' not in self.m_metadata:
             raise NameError(f'no Postman file define in metadata for stream {self.name}')
@@ -144,11 +148,10 @@ class Stream:
         mdata = metadata.write(mdata, (), 'table-key-properties', self.m_metadata['key_properties'])
         self.postman_item = self.m_metadata['postman_item'] if 'postman_item' in self.m_metadata else self.name
 
-        if 'replication_method' in self.m_metadata:
-            mdata = metadata.write(mdata, (), 'forced-replication-method', self.m_metadata['replication_method'])
-
-        if 'replication_key' in self.m_metadata:
-            mdata = metadata.write(mdata, (), 'valid-replication-keys', [self.m_metadata['replication_key']])
+        if self.replication_method:
+            mdata = metadata.write(mdata, (), 'forced-replication-method', self.replication_method)
+        if self.replication_key:
+            mdata = metadata.write(mdata, (), 'valid-replication-keys', [self.replication_key])
 
         self.write_meta_recu(mdata, (), self.schema)
         return metadata.to_list(mdata)
@@ -178,32 +181,33 @@ class Stream:
 
     # The main sync function.
     def sync(self, state):
-        # bookmark = self.get_bookmark(state)
-        res = self.client.request(self.postman)
-        logger.info(f'Sync {self.name}, res.length: {len(res)}')
+        while self.postman.isValid:
+            Context.update(state, self.name)
+            res = self.client.request(self.postman)
+            logger.info(f'Sync {self.name}, res.length: {len(res)}')
 
-        expr = jparse(self.data_root)
-        for item in res:
-            if self.replication_method == "INCREMENTAL":
-                self.update_bookmark(state, item[self.replication_key])
+            expr = jparse(self.data_root)
+            for item in res:
+                if self.replication_method == "INCREMENTAL":
+                    self.update_bookmark(state, item[self.replication_key])
 
-            additional_k = []
-            for key in self.additional_keys:
-                exp = jparse(key['path'])
-                val = exp.find(item)[0].value
-                additional_k.append({key['alias']: val})
+                additional_k = []
+                for key in self.additional_keys:
+                    exp = jparse(key['path'])
+                    val = exp.find(item)[0].value
+                    additional_k.append({key['alias']: val})
 
-            roots = expr.find(item)
-            for values in roots:
-                rec = values.value
+                roots = expr.find(item)
+                for values in roots:
+                    rec = values.value
 
-                if isinstance(rec, list):
-                    for record in rec:
+                    if isinstance(rec, list):
+                        for record in rec:
+                            for key in additional_k:
+                                record.update(key)
+                            yield self.stream, record
+                    else:
                         for key in additional_k:
-                            record.update(key)
-                        yield self.stream, record
-                else:
-                    for key in additional_k:
-                        rec.update(key)
-                    yield self.stream, rec
+                            rec.update(key)
+                        yield self.stream, rec
 
