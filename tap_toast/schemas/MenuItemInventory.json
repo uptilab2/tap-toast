@@ -1,0 +1,1 @@
+{"type": ["null", "object"], "properties": {"guid": {"type": ["null", "string"]}, "itemGuidValidity": {"type": ["null", "string"]}, "status": {"type": ["null", "string"]}, "quantity": {"type": ["null", "number"]}, "multiLocationId": {"type": ["null", "string"]}, "versionId": {"type": ["null", "string"]}}}

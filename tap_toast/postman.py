@@ -6,6 +6,7 @@ from jsonpath_ng import parse
 from tap_toast.utils import get_abs_path
 from base64 import b64encode
 import singer
+import requests
 
 logger = singer.get_logger()
 
@@ -37,10 +38,12 @@ class Postman:
     request = None
     authentication = None
     forced_url = None
+    name = None
+    postProcess = None
 
     def __init__(self, postname):
-        name = postname['filename']
-        filename = get_abs_path(f'postman/{name}.json', Context.config.get('base_path'))
+        self.name = postname['filename']
+        filename = get_abs_path(f'postman/{self.name}.json', Context.config.get('base_path'))
         if not os.path.exists(filename):
             return
         logger.info(f'Read Postman from "{filename}"')
@@ -138,3 +141,40 @@ class Postman:
                         val = expr.find(res)
                         logger.info(f'Postman, setToken to var {key}')
                         Context.config[key] = val[0].value if res is not None else None
+
+    def call(self):
+        payload = self.payload
+        headers = self.headers
+        url = self.url
+
+        logger.info(f'Request {self.method} {url}')
+        if self.method == "GET":
+            response = requests.get(url, headers=headers)
+        else:
+            response = requests.post(url, headers=headers, json=payload)
+        logger.info(f'{self.method} request {url} response {response.status_code}')
+        response.raise_for_status()
+        if self.postProcess:
+            self.postProcess(self, response)
+
+        try:
+            res = response.json()
+            if isinstance(res, dict):
+                res = [res]
+        except ValueError as err:
+            logger.error(f'HTTP error: {response.reason}')
+            raise err
+
+        return res
+
+    def get_authorization_token(self):
+        payload = self.payload
+        headers = self.headers
+        url = self.url
+        logger.info(f'POST authentication request {url}')
+        response = requests.post(url, data=payload, headers=headers)
+        logger.info(f'POST authentication request {url} response {response.status_code}')
+        response.raise_for_status()
+        res = response.json()
+        self.setToken(res)
+        logger.info('Authorization successful.')

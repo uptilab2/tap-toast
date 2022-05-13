@@ -8,7 +8,7 @@ from tap_toast.context import Context
 logger = singer.get_logger()
 
 
-def discover_streams(client):
+def _discover_streams(client):
     streams = []
 
     for f in os.listdir(get_abs_path(f'metadatas/', Context.config.get('base_path'))):

@@ -1,0 +1,9 @@
+{
+    "replication_method": "FULL_TABLE",
+    "key_properties": ["guid"],
+    "schema": "MenuItemInventory",
+    "postman": {
+            "filename": "stock",
+            "item": "inventory"
+        }
+}

@@ -1,0 +1,52 @@
+{
+	"info": {
+		"_postman_id": "16052909-77a0-401d-b2d9-5eace1d607ce",
+		"name": "Stocks API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "prep Stations",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Toast-Restaurant-External-Id",
+						"value": "{{location_guid}}"
+					}
+				],
+				"url": {
+					"raw": "{{hostname}}/kitchen/v1/published/prepStations",
+					"host": [
+						"{{hostname}}"
+					],
+					"path": [
+						"kitchen",
+						"v1",
+						"published",
+						"prepStations"
+					],
+					"query": [
+								{
+									"key": "lastModified",
+									"value": "{{lastModified}}"
+								},
+								{
+									"key": "pageToken",
+									"value": "{{pageToken}}"
+								}					]
+				}
+			}
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{access_token}}",
+				"type": "string"
+			}
+		]
+	}
+}

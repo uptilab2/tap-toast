@@ -36,6 +36,7 @@ class Stream:
     stream = None
     session_bookmark = None
     postman = None
+    postman_authentication = None
     m_schema = None
     m_metadata = None
     schema_root = '$'
@@ -44,15 +45,18 @@ class Stream:
     additional_keys = None
     postman_item = None
 
-    def __init__(self, name, client=None):
+    def __init__(self, name, postman_authentication=None, postProcess=None):
         self.additional_keys = []
         self.name = name
-        self.client = client
         self.load_masters()
+        self.postman_authentication = postman_authentication
         if 'root' in self.m_metadata:
             self.setRoots(self.m_schema, self.m_metadata['root'].split('.'))
         if 'root_key' in self.m_metadata:
             self.root_key = self.m_metadata['root_key']
+        if self.postman and postProcess:
+            self.postman.postProcess = postProcess
+
 
     @property
     def isValid(self):
@@ -183,7 +187,10 @@ class Stream:
     def sync(self, state):
         while self.postman.isValid:
             Context.update(state, self.name)
-            res = self.client.request(self.postman)
+
+            if not self.postman.isAnonymous and not self.postman.is_authorized:
+                self.postman_authentication.get_authorization_token()
+            res = self.postman.call()
             logger.info(f'Sync {self.name}, res.length: {len(res)}')
 
             expr = jparse(self.data_root)

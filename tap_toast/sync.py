@@ -5,7 +5,7 @@ from singer import metadata
 from singer import Transformer
 
 
-def sync_stream(state, instance):
+def _sync_stream(state, instance):
     stream = instance.stream
 
     with metrics.record_counter(stream.tap_stream_id) as counter:

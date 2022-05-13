@@ -226,6 +226,55 @@
 					"body": "{\n    \"restaurantGuid\": \"1ca55347-2a8a-404c-9d69-215242e958ec\",\n    \"lastUpdated\": \"2021-12-28T18:31:16.121+0000\"\n}"
 				}
 			]
+		},
+		{
+			"name": "restaurant info",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Toast-Restaurant-External-Id",
+						"value": "{{location_guid}}"
+					}
+				],
+				"url": {
+					"raw": "{{hostname}}/restaurants/v1/restaurants/{location_guid}",
+					"host": [
+						"{{hostname}}"
+					],
+					"path": [
+						"restaurants",
+						"v1",
+						"restaurants",
+						"{{location_guid}}"
+					]
+				}
+			}
+		},
+		{
+			"name": "restaurants",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Toast-Restaurant-External-Id",
+						"value": "{{location_guid}}"
+					}
+				],
+				"url": {
+					"raw": "{{hostname}}/restaurants/v1/groups/{{managementGroupGUID}}/restaurants",
+					"host": [
+						"{{hostname}}"
+					],
+					"path": [
+						"restaurants",
+						"v1",
+						"groups",
+						"{{managementGroupGUID}}",
+						"restaurants"
+					]
+				}
+			}
 		}
 	],
 	"auth": {

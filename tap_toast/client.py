@@ -3,91 +3,96 @@
 # Module dependencies.
 #
 import re
-from datetime import timedelta
-import backoff
-import requests
+import os
+import sys
 import logging
-import pytz
 from tap_toast.context import Context
 from tap_toast.postman import Postman
+from tap_toast.utils import get_abs_path
+from tap_toast.streams import Stream
+import singer
+import singer.metrics as metrics
+from singer import metadata
+from singer import Transformer
 
 logger = logging.getLogger()
-utc = pytz.UTC
-
-
-def get_start_end_hour(start_date, end_date):
-    delta = timedelta(hours=1)
-    format_string = '%Y-%m-%dT%H:%M:%S.000-0000'  # hard coding this timezone because it's too complicated
-    while start_date < end_date:
-        yield start_date.strftime(format_string), (start_date + delta).strftime(format_string)
-        start_date += delta
-
-
-def daterange(start_date, end_date):
-    for n in range(int((end_date - start_date).days)):
-        yield start_date + timedelta(n)
 
 
 class Client(object):
     authentication = None
+    post_process = None
 
     def __init__(self):
         if 'authentication_postman' in Context.config:
             self.authentication = Postman(Context.config['authentication_postman'])
 
     @staticmethod
-    def _url(path):
-        return f'{Context.config["hostname"]}/{path.lstrip("/")}'
+    def do_discover():
+        streams = []
+
+        for f in os.listdir(get_abs_path(f'metadatas/', Context.config.get('base_path'))):
+            m = re.match(r'([a-zA-Z_]+)\.json', f)
+            if m is not None:
+                s = Stream(m.group(1))
+                if s.isValid:
+                    schema = singer.resolve_schema_references(s.schema)
+                    metadata = s.metadata
+                    logger.info(
+                        f'Discover => stream: {s.name}, stream_alias: {s.postman_item}, tap_stream_id: {s.name}')
+                    streams.append({'stream': s.name, 'stream_alias': s.postman_item, 'tap_stream_id': s.name,
+                                    'schema': schema, 'metadata': metadata})
+        return {"streams": streams}
 
     @staticmethod
-    def readNextPage(postman, response):
-        has_next = False
-        if 'link' in response.headers:
-            links = response.headers['link'].split(',')
-            for link in links:
-                groups = re.findall(r'^ ?<(.*)>; ?rel="next"$', link)
-                if groups:
-                    postman.setUrl(groups[0])
-                    has_next = True
-        if not has_next:
-            postman.request = None
+    def get_selected_streams(catalog):
+        selected_stream_names = []
+        for stream in catalog.streams:
+            if stream.schema.selected:
+                selected_stream_names.append(stream.tap_stream_id)
+        return selected_stream_names
 
-    @backoff.on_exception(backoff.expo, requests.exceptions.RequestException)
-    def request(self, postman):
-        if not postman.isAnonymous and not postman.is_authorized:
-            self.get_authorization_token()
+    @staticmethod
+    def sync_stream(state, instance):
+        stream = instance.stream
 
-        payload = postman.payload
-        headers = postman.headers
-        url = postman.url
+        with metrics.record_counter(stream.tap_stream_id) as counter:
+            for (stream, record) in instance.sync(state):
+                counter.increment()
 
-        logger.info(f'Request {postman.method} {url}')
-        if postman.method == "GET":
-            response = requests.get(url, headers=headers)
-        else:
-            response = requests.post(url, headers=headers, json=payload)
-        logger.info(f'{postman.method} request {url} response {response.status_code}')
-        response.raise_for_status()
-        self.readNextPage(postman, response)
+                with Transformer() as transformer:
+                    record = transformer.transform(record, stream.schema.to_dict(), metadata.to_map(stream.metadata))
 
-        try:
-            res = response.json()
-            if isinstance(res, dict):
-                res = [res]
-        except ValueError as err:
-            logger.error(f'HTTP error: {response.reason}')
-            raise err
+                singer.write_record(stream.tap_stream_id, record)
+                # NB: We will only write state at the end of a stream's sync:
+                #  We may find out that there exists a sync that takes too long and can never emit a bookmark
+                #  but we don't know if we can guarentee the order of emitted records.
 
-        return res
+            if instance.replication_method == "INCREMENTAL":
+                singer.write_state(state)
 
-    def get_authorization_token(self):
-        payload = self.authentication.payload
-        headers = self.authentication.headers
-        url = self.authentication.url
-        logger.info(f'POST authentication request {url}')
-        response = requests.post(url, data=payload, headers=headers)
-        logger.info(f'POST authentication request {url} response {response.status_code}')
-        response.raise_for_status()
-        res = response.json()
-        self.authentication.setToken(res)
-        logger.info('Authorization successful.')
+            return counter.value
+
+    def do_sync(self, catalog, state):
+        selected_stream_names = Client.get_selected_streams(catalog)
+
+        for stream in catalog.streams:
+            stream_name = stream.tap_stream_id
+
+            mdata = singer.metadata.to_map(stream.metadata)
+
+            if stream_name not in selected_stream_names:
+                continue
+
+            key_properties = singer.metadata.get(mdata, (), 'table-key-properties')
+            singer.write_schema(stream_name, stream.schema.to_dict(), key_properties)
+
+            logger.info("%s: Starting sync", stream_name)
+            instance = Stream(stream_name, self.authentication, self.post_process)
+            if not instance.isValid:
+                raise NameError(f'Stream {stream_name} missing postman file')
+            instance.stream = stream
+            counter_value = Client.sync_stream(state, instance)
+            logger.info("%s: Completed sync (%s rows)", stream_name, counter_value)
+
+
+

@@ -1,0 +1,10 @@
+{
+    "replication_method": "FULL_TABLE",
+    "key_properties": ["guid"],
+    "schema": "restaurant",
+    "postman": {
+            "filename": "menus",
+            "item": "restaurant info"
+        }
+
+}
