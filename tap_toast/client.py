@@ -24,7 +24,11 @@ class Client(object):
 
     def __init__(self):
         if 'authentication_postman' in Context.config:
-            self.authentication = Postman(Context.config['authentication_postman'])
+            name = {
+                "filename": Context.config['authentication_postman'],
+                "item": Context.config['authentication_postman']
+            }
+            self.authentication = Postman(name)
 
     @staticmethod
     def do_discover():
