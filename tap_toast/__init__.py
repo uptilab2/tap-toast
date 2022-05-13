@@ -1,11 +1,7 @@
 import json
 import sys
 import singer
-from singer import metadata
 from tap_toast.client import Client
-# from tap_toast.discover import discover_streams
-# from tap_toast.sync import sync_stream
-from tap_toast.streams import Stream
 from tap_toast.context import Context
 
 from utils import readNextPage
