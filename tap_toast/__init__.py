@@ -3,8 +3,8 @@ import sys
 import singer
 from tap_toast.client import Client
 from tap_toast.context import Context
+from tap_toast.utils import readNextPage
 
-from utils import readNextPage
 LOGGER = singer.get_logger()
 
 
