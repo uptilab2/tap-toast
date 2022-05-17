@@ -8,6 +8,12 @@ from tap_toast.utils import readNextPage
 LOGGER = singer.get_logger()
 
 
+def setEndDate(postman):
+    if postman.name == "orders" and Context.config.get('endDate', '') == '':
+        from datetime import datetime
+        Context.config['end_date'] = datetime.now().strftime("%Y-%m-%dT%H:%M:%S.000Z")
+
+
 # @singer.utils.handle_top_exception(LOGGER)
 def main():
     parsed_args = singer.utils.parse_args([])
@@ -15,6 +21,7 @@ def main():
     Context.config = parsed_args.config
     cli = Client()
     cli.post_process = readNextPage
+    cli.pre_process = setEndDate
 
     if parsed_args.discover:
         catalog = cli.do_discover()
