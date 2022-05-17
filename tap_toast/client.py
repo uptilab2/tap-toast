@@ -21,6 +21,8 @@ logger = logging.getLogger()
 class Client(object):
     authentication = None
     post_process = None
+    pre_process = None
+    c = None
 
     def __init__(self):
         if 'authentication_postman' in Context.config:
@@ -91,7 +93,7 @@ class Client(object):
             singer.write_schema(stream_name, stream.schema.to_dict(), key_properties)
 
             logger.info("%s: Starting sync", stream_name)
-            instance = Stream(stream_name, self.authentication, self.post_process)
+            instance = Stream(stream_name, self.authentication, self.post_process, self.pre_process)
             if not instance.isValid:
                 raise NameError(f'Stream {stream_name} missing postman file')
             instance.stream = stream

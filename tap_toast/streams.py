@@ -45,7 +45,7 @@ class Stream:
     additional_keys = None
     postman_item = None
 
-    def __init__(self, name, postman_authentication=None, postProcess=None):
+    def __init__(self, name, postman_authentication=None, post_process=None, pre_process=None):
         self.additional_keys = []
         self.name = name
         self.load_masters()
@@ -54,8 +54,11 @@ class Stream:
             self.setRoots(self.m_schema, self.m_metadata['root'].split('.'))
         if 'root_key' in self.m_metadata:
             self.root_key = self.m_metadata['root_key']
-        if self.postman and postProcess:
-            self.postman.postProcess = postProcess
+
+        if self.postman and post_process:
+            self.postman.postProcess = post_process
+        if self.postman and pre_process:
+            self.postman.preProcess = pre_process
 
 
     @property

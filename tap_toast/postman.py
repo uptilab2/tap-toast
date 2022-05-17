@@ -40,6 +40,7 @@ class Postman:
     forced_url = None
     name = None
     postProcess = None
+    preProcess = None
 
     def __init__(self, postname):
         self.name = postname['filename']
@@ -143,6 +144,8 @@ class Postman:
                         Context.config[key] = val[0].value if res is not None else None
 
     def call(self):
+        if self.preProcess:
+            self.preProcess(self)
         payload = self.payload
         headers = self.headers
         url = self.url
