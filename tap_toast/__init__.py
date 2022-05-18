@@ -6,6 +6,7 @@ from tap_toast.context import Context
 from tap_toast.utils import readNextPage
 
 LOGGER = singer.get_logger()
+HOSTNAME = 'https://ws-sandbox-api.eng.toasttab.com'
 
 
 def setEndDate(postman):
@@ -19,6 +20,9 @@ def main():
     parsed_args = singer.utils.parse_args([])
 
     Context.config = parsed_args.config
+    Context.config.setdefault('hostname', HOSTNAME)
+    Context.config.setdefault('authentication_postman', 'authentication')
+
     cli = Client()
     cli.post_process = readNextPage
     cli.pre_process = setEndDate
