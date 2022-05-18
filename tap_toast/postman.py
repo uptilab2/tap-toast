@@ -7,6 +7,8 @@ from tap_toast.utils import get_abs_path
 from base64 import b64encode
 import singer
 import requests
+import urllib.parse
+
 
 logger = singer.get_logger()
 
@@ -17,10 +19,11 @@ def setVars(string):
     return string
 
 
-def setOptionalVar(string):
+def setOptionalVar(string, url_encode=False):
     for group in re.findall(r'{{([a-zA-Z_-]*)}}', string):
         if group in Context.config:
-            string = string.replace(f'{{{{{group}}}}}', Context.config[group])
+            text = urllib.parse.quote_plus(Context.config[group]) if url_encode else Context.config[group]
+            string = string.replace(f'{{{{{group}}}}}', text)
         else:
             return False, string
     return True, string
@@ -101,7 +104,7 @@ class Postman:
         if 'query' in _url:
             qs = ''
             for q in _url['query']:
-                var = setOptionalVar(f'&{q["key"]}={q["value"]}')
+                var = setOptionalVar(f'&{q["key"]}={q["value"]}', True)
                 if var[0]:
                     qs = qs + var[1]
             res = res + qs.replace('&', '?', 1)
